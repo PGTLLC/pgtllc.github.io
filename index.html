@@ -1,1316 +1,421 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Merchant Application — Ownership & Banking Information</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Maryland Tag & Title | Lower Credit Card Processing Costs</title>
 <style>
-/* ── RESET ── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-
-/* ── TOKENS ── */
-:root{
---ink: #0C0E11;
---ink2: #13171E;
---panel: #111419;
---panel2: #181D25;
---panel3: #1E2430;
---border: rgba(200,169,110,.18);
---border2: rgba(255,255,255,.09);
---gold: #C8A96E;
---gold-l: #E8D4A0;
---gold-dim: rgba(200,169,110,.07);
---white: #FFFFFF;
---off-white:#F0EDE8;
---mist: #7D8A98;
---mist2: #B2BAC6;
---red: #C04A2B;
---green: #2E8B57;
---r: 9px;
---shadow: 0 4px 32px rgba(0,0,0,.5);
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
 
-body{
-font-family:'DM Sans',system-ui,sans-serif;
-background:var(--ink);
-color:var(--white);
-min-height:100vh;
--webkit-font-smoothing:antialiased;
--webkit-tap-highlight-color:transparent;
-overflow-x:hidden;
+body {
+background-color: #0a1128;
+font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+line-height: 1.4;
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 
-/* ── GRAIN TEXTURE ── */
-body::after{
-content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
+.slide {
+width: 8.5in;
+min-height: 11in;
+background-color: #0a1128;
+margin: 0.25in auto;
+page-break-after: always;
+break-after: page;
+position: relative;
+padding: 0.6in 0.5in 0.5in 0.5in;
+box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+color: #ffffff;
 }
 
-/* ── AMBIENT GLOW ── */
-.glow{
-position:fixed;top:-300px;left:50%;transform:translateX(-50%);
-width:900px;height:600px;border-radius:50%;
-background:radial-gradient(ellipse,rgba(200,169,110,.05) 0%,transparent 70%);
-pointer-events:none;z-index:0;
+h1 {
+font-size: 52px;
+font-weight: 800;
+letter-spacing: -0.02em;
+margin-bottom: 24px;
+color: #f5b041;
+line-height: 1.2;
 }
 
-/* ── LAYOUT ── */
-.page{
-position:relative;z-index:1;
-max-width:760px;margin:0 auto;
-padding:0 20px 80px;
+h2 {
+font-size: 34px;
+font-weight: 700;
+margin: 20px 0 16px 0;
+color: #f5b041;
+border-left: 5px solid #f5b041;
+padding-left: 20px;
 }
 
-/* ── HEADER ── */
-header{padding:40px 0 0;text-align:center;margin-bottom:36px}
-
-.brand-strip{
-display:flex;align-items:center;justify-content:center;gap:8px;
-margin-bottom:24px;
-}
-.brand-logo{
-font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;
-color:var(--gold);text-transform:uppercase;
-}
-.brand-sep{width:24px;height:1px;background:rgba(200,169,110,.3)}
-.brand-sub{font-size:11px;color:var(--mist);letter-spacing:1px}
-
-h1{
-font-family:'Cormorant Garamond',serif;
-font-size:clamp(36px,7vw,58px);font-weight:300;
-line-height:1.05;color:var(--white);letter-spacing:-.5px;
-margin-bottom:10px;
-}
-h1 em{color:var(--gold);font-style:italic}
-
-.sub-headline{
-font-size:14px;color:var(--mist2);line-height:1.6;
-max-width:500px;margin:0 auto 28px;
+h3 {
+font-size: 24px;
+font-weight: 600;
+margin: 20px 0 12px 0;
+color: #f0bc6e;
 }
 
-/* Gold rule */
-.rule{width:52px;height:1px;background:var(--gold);margin:0 auto 8px;opacity:.55}
-
-/* ── PROGRESS STRIP ── */
-.progress-strip{
-display:flex;align-items:center;justify-content:center;
-gap:6px;margin-bottom:36px;flex-wrap:wrap;
-}
-.ps-item{
-display:flex;align-items:center;gap:6px;
-font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;
-color:var(--mist);text-transform:uppercase;
-padding:6px 14px;border-radius:100px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.02);
-transition:all .3s;
-}
-.ps-item.active{
-border-color:rgba(200,169,110,.4);
-background:var(--gold-dim);color:var(--gold);
-}
-.ps-item.done{
-border-color:rgba(46,139,87,.3);
-background:rgba(46,139,87,.08);color:var(--green);
-}
-.ps-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
-
-/* ── SECTION CARDS ── */
-.section-card{
-background:var(--panel);
-border:1px solid var(--border);
-border-radius:16px;
-padding:32px 28px;
-margin-bottom:20px;
-position:relative;overflow:hidden;
-box-shadow:var(--shadow);
-transition:border-color .3s;
-}
-.section-card:hover{border-color:rgba(200,169,110,.25)}
-.section-card::before{
-content:'';position:absolute;top:0;left:0;right:0;height:2px;
-background:linear-gradient(90deg,transparent,var(--gold),transparent);
+.big-number {
+font-size: 56px;
+font-weight: 800;
+color: #f5b041;
+display: inline-block;
+margin-right: 12px;
 }
 
-.sc-header{
-display:flex;align-items:center;gap:16px;
-margin-bottom:24px;padding-bottom:20px;
-border-bottom:1px solid rgba(255,255,255,.06);
-}
-.sc-icon{
-width:44px;height:44px;border-radius:10px;
-background:var(--gold-dim);border:1px solid var(--border);
-display:flex;align-items:center;justify-content:center;
-font-size:20px;flex-shrink:0;
-}
-.sc-title-wrap{}
-.sc-overline{
-font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;
-color:var(--gold);text-transform:uppercase;margin-bottom:4px;
-}
-.sc-title{
-font-family:'Cormorant Garamond',serif;
-font-size:clamp(20px,3.5vw,26px);font-weight:400;color:var(--white);
-line-height:1.2;
+.stat-label {
+font-size: 18px;
+color: #ccd6f0;
+text-transform: uppercase;
+letter-spacing: 1px;
 }
 
-/* ── FORM ELEMENTS ── */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-grid.three{grid-template-columns:1fr 1fr 1fr}
-.form-grid.wide{grid-template-columns:2fr 1fr}
-.form-grid.slim{grid-template-columns:1fr 1fr 1fr 1fr}
-@media(max-width:560px){
-.form-grid,.form-grid.three,.form-grid.wide,.form-grid.slim{grid-template-columns:1fr}
+p, li {
+font-size: 18px;
+line-height: 1.5;
+color: #e6edf5;
+margin-bottom: 12px;
 }
 
-.form-group{margin-bottom:16px}
-.form-group.full{grid-column:1/-1}
-.form-group.span2{grid-column:span 2}
-@media(max-width:560px){.form-group.span2{grid-column:1}}
-
-label{
-display:block;font-size:12px;font-weight:500;
-color:var(--mist2);margin-bottom:7px;letter-spacing:.3px;
-}
-label .req{color:var(--gold);margin-left:2px}
-label .note{
-font-size:11px;color:var(--mist);font-weight:400;
-display:block;margin-top:2px;line-height:1.4;
+.highlight {
+background-color: #f5b04120;
+border-left: 4px solid #f5b041;
+padding: 16px 20px;
+margin: 20px 0;
+font-style: italic;
+border-radius: 0 8px 8px 0;
 }
 
-input[type=text],
-input[type=email],
-input[type=tel],
-input[type=number],
-input[type=date],
-input[type=password],
-select,
-textarea{
-width:100%;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.1);
-border-radius:var(--r);
-color:var(--white);
-font-family:'DM Sans',sans-serif;
-font-size:15px;
-padding:13px 15px;
-outline:none;
-transition:border-color .25s,box-shadow .25s,background .25s;
--webkit-appearance:none;appearance:none;
-}
-input:focus,select:focus,textarea:focus{
-border-color:var(--gold);
-box-shadow:0 0 0 3px rgba(200,169,110,.1);
-background:rgba(255,255,255,.06);
-}
-input::placeholder,textarea::placeholder{color:var(--mist)}
-input.error,select.error{border-color:rgba(192,74,43,.6)}
-input:disabled{opacity:.4;cursor:not-allowed}
-
-select{
-cursor:pointer;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237D8A98' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-background-repeat:no-repeat;background-position:right 14px center;
-padding-right:40px;
-}
-select option{background:var(--ink2);color:var(--white)}
-
-/* SSN masked input */
-.ssn-wrap{position:relative}
-.ssn-wrap input{letter-spacing:3px;font-family:'DM Mono',monospace;font-size:14px}
-.ssn-toggle{
-position:absolute;right:12px;top:50%;transform:translateY(-50%);
-background:transparent;border:none;color:var(--mist);cursor:pointer;
-font-size:16px;padding:4px;transition:color .2s;
-}
-.ssn-toggle:hover{color:var(--gold)}
-
-/* Date input */
-input[type=date]::-webkit-calendar-picker-indicator{
-filter:invert(.4) sepia(1) saturate(3) hue-rotate(0deg);
-cursor:pointer;opacity:.6;
-}
-input[type=date]::-webkit-calendar-picker-indicator:hover{opacity:1}
-
-/* ── INFO / WARNING BOXES ── */
-.info-box{
-background:var(--gold-dim);border:1px solid var(--border);
-border-left:3px solid var(--gold);
-border-radius:var(--r);padding:14px 16px;
-margin-bottom:20px;font-size:13px;
-color:var(--mist2);line-height:1.6;
-}
-.info-box strong{color:var(--gold-l)}
-
-.warn-box{
-background:rgba(192,74,43,.08);
-border:1px solid rgba(192,74,43,.2);
-border-left:3px solid var(--red);
-border-radius:var(--r);padding:14px 16px;
-margin-bottom:20px;font-size:13px;
-color:#E0A090;line-height:1.6;
+.two-column {
+display: flex;
+gap: 30px;
+margin: 25px 0;
+justify-content: space-between;
 }
 
-.secure-note{
-display:inline-flex;align-items:center;gap:7px;
-font-size:11px;color:var(--mist);margin-top:6px;
-}
-.secure-note::before{content:'🔐';font-size:12px}
-
-/* ── DIVIDER ── */
-.divider{
-height:1px;
-background:linear-gradient(90deg,transparent,rgba(200,169,110,.15),transparent);
-margin:24px 0;
+.card {
+background: #0f1a3a;
+border-radius: 16px;
+padding: 20px;
+flex: 1;
+border: 1px solid #1e2a4a;
 }
 
-/* ── ADDRESS FIELDS ── */
-.address-autocomplete{
-position:relative;
-}
-.addr-hint{
-font-size:11px;color:var(--mist);margin-top:5px;
-display:flex;align-items:center;gap:5px;
-}
-.addr-hint::before{content:'📍';font-size:11px}
-
-/* ── BANK SECTION ── */
-.bank-block{
-background:rgba(255,255,255,.02);
-border:1px solid rgba(255,255,255,.07);
-border-radius:12px;padding:22px 20px;
-margin-bottom:16px;position:relative;
-}
-.bank-block::before{
-content:'';position:absolute;top:0;left:0;right:0;height:2px;
-border-radius:12px 12px 0 0;
-background:linear-gradient(90deg,var(--gold),transparent);
-opacity:.4;
-}
-.bank-label{
-font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
-color:var(--gold);text-transform:uppercase;margin-bottom:18px;
-display:flex;align-items:center;gap:8px;
-}
-.bank-label::after{content:'';flex:1;height:1px;background:rgba(200,169,110,.15)}
-
-.bank-number-wrap{
-display:flex;align-items:center;gap:10px;
-}
-.bank-number-wrap input{font-family:'DM Mono',monospace;font-size:14px;letter-spacing:1px}
-.bank-eye{
-width:44px;height:44px;border-radius:var(--r);
-background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-display:flex;align-items:center;justify-content:center;
-font-size:18px;cursor:pointer;flex-shrink:0;
-transition:all .2s;color:var(--mist);
-}
-.bank-eye:hover{border-color:var(--gold);color:var(--gold)}
-
-/* Account type radio */
-.account-type-row{
-display:flex;gap:10px;flex-wrap:wrap;
-}
-.acct-option{
-flex:1;min-width:120px;
-display:flex;align-items:center;gap:10px;
-padding:12px 16px;
-border:1px solid rgba(255,255,255,.09);
-border-radius:var(--r);cursor:pointer;
-transition:all .2s;background:rgba(255,255,255,.02);
-}
-.acct-option:hover{border-color:rgba(200,169,110,.3);background:var(--gold-dim)}
-.acct-option input[type=radio]{
-accent-color:var(--gold);cursor:pointer;
-width:16px;height:16px;flex-shrink:0;
-}
-.acct-option-label{font-size:13px;color:var(--mist2);font-weight:500}
-.acct-option input:checked ~ .acct-option-label{color:var(--gold)}
-
-/* ── VOID CHECK UPLOAD ── */
-.void-upload{
-border:1.5px dashed rgba(200,169,110,.3);
-border-radius:var(--r);padding:24px 16px;
-text-align:center;cursor:pointer;
-background:var(--gold-dim);position:relative;
-transition:all .25s;
-}
-.void-upload:hover{border-color:var(--gold);background:rgba(200,169,110,.1)}
-.void-upload input[type=file]{
-position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
-}
-.vu-icon{font-size:28px;margin-bottom:8px}
-.vu-text{font-size:13px;color:var(--mist2);font-weight:500;margin-bottom:3px}
-.vu-sub{font-size:11px;color:var(--mist)}
-.vu-badge{
-display:inline-block;margin-top:10px;
-font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
-color:var(--gold);border:1px solid rgba(200,169,110,.3);
-padding:5px 14px;border-radius:100px;
-}
-.file-attached{
-display:none;margin-top:12px;padding:10px 14px;
-background:rgba(46,139,87,.1);border:1px solid rgba(46,139,87,.25);
-border-radius:7px;align-items:center;gap:10px;
-animation:slideIn .3s ease;
-}
-.file-attached.show{display:flex}
-@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.fa-icon{font-size:18px;flex-shrink:0}
-.fa-name{font-size:12px;font-weight:500;color:var(--white)}
-.fa-size{font-size:11px;color:var(--mist)}
-.fa-remove{
-margin-left:auto;background:transparent;border:none;
-color:var(--mist);cursor:pointer;font-size:14px;
-width:26px;height:26px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-transition:all .2s;
-}
-.fa-remove:hover{background:rgba(192,74,43,.2);color:var(--red)}
-
-/* Add bank button */
-.btn-add-bank{
-display:flex;align-items:center;gap:8px;
-background:transparent;border:1px dashed rgba(200,169,110,.3);
-border-radius:var(--r);padding:12px 18px;
-color:var(--gold);font-family:'DM Sans',sans-serif;
-font-size:13px;font-weight:500;cursor:pointer;
-transition:all .25s;width:100%;margin-bottom:20px;
-}
-.btn-add-bank:hover{border-color:var(--gold);background:var(--gold-dim)}
-.btn-add-bank .plus{font-size:18px;line-height:1}
-
-/* ── FUNDING ROLLUP ── */
-.funding-select-wrap{
-display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-}
-.funding-info-btn{
-width:26px;height:26px;border-radius:50%;
-background:rgba(200,169,110,.12);border:1px solid rgba(200,169,110,.25);
-display:inline-flex;align-items:center;justify-content:center;
-font-size:12px;color:var(--gold);cursor:pointer;flex-shrink:0;
-transition:all .2s;font-family:'DM Mono',monospace;font-weight:500;
-}
-.funding-info-btn:hover{background:rgba(200,169,110,.2)}
-.funding-tooltip{
-display:none;margin-top:8px;padding:12px 14px;
-background:var(--panel3);border:1px solid var(--border);
-border-radius:var(--r);font-size:12px;color:var(--mist2);line-height:1.6;
-}
-.funding-tooltip.show{display:block;animation:slideIn .2s ease}
-
-/* ── CONSENT ── */
-.consent-row{
-display:flex;align-items:flex-start;gap:14px;
-padding:16px;background:rgba(255,255,255,.02);
-border:1px solid rgba(255,255,255,.07);border-radius:var(--r);
-cursor:pointer;transition:border-color .2s;
-}
-.consent-row:hover{border-color:rgba(200,169,110,.25)}
-.consent-row input[type=checkbox]{
-flex-shrink:0;margin-top:2px;
-accent-color:var(--gold);cursor:pointer;
-width:17px;height:17px;
-}
-.consent-text{font-size:13px;color:var(--mist2);line-height:1.6}
-.consent-text strong{color:var(--white)}
-
-/* ── SUBMIT ── */
-.submit-area{
-margin-top:28px;display:flex;flex-direction:column;gap:14px;align-items:center;
-}
-.btn-submit{
-width:100%;padding:18px 24px;
-background:var(--gold);color:var(--ink);
-border:none;border-radius:var(--r);
-font-family:'DM Mono',monospace;font-size:13px;
-font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
-cursor:pointer;position:relative;overflow:hidden;
-transition:all .3s;
-}
-.btn-submit::before{
-content:'';position:absolute;inset:0;
-background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 60%);
-pointer-events:none;
-}
-.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,169,110,.35)}
-.btn-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.submit-note{font-size:11px;color:var(--mist);text-align:center;line-height:1.6}
-
-/* ── PROGRESS BAR ── */
-.top-progress{
-position:fixed;top:0;left:0;height:3px;
-background:linear-gradient(90deg,var(--gold),var(--gold-l));
-transition:width .5s ease;z-index:999;
-width:0%;
+.card h4 {
+font-size: 22px;
+font-weight: 700;
+color: #f5b041;
+margin-bottom: 12px;
 }
 
-/* ── ERROR TEXT ── */
-.err-text{
-font-size:11px;color:#E08070;
-margin-top:5px;display:none;
+table {
+width: 100%;
+border-collapse: collapse;
+margin: 20px 0;
+background: #0f1a3a;
+border-radius: 12px;
+overflow: hidden;
 }
 
-/* ── SUCCESS STATE ── */
-.success-overlay{
-display:none;text-align:center;
-padding:52px 32px;
-}
-.success-overlay.show{display:block;animation:slideIn .5s ease}
-.success-icon{font-size:60px;display:block;margin-bottom:20px}
-.success-title{
-font-family:'Cormorant Garamond',serif;
-font-size:38px;font-weight:300;color:var(--white);
-margin-bottom:10px;
-}
-.success-title em{color:var(--gold);font-style:italic}
-.success-sub{font-size:15px;color:var(--mist2);line-height:1.7;max-width:420px;margin:0 auto 28px}
-.success-ref{
-font-family:'DM Mono',monospace;font-size:12px;
-color:var(--gold);letter-spacing:2px;
-padding:10px 20px;border:1px solid var(--border);
-border-radius:100px;display:inline-block;margin-bottom:28px;
-}
-.next-steps{
-text-align:left;background:var(--gold-dim);
-border:1px solid var(--border);border-radius:12px;padding:22px;
-}
-.next-steps h3{
-font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
-color:var(--gold);text-transform:uppercase;margin-bottom:14px;
-}
-.ns-item{
-display:flex;align-items:flex-start;gap:12px;
-font-size:13px;color:var(--mist2);margin-bottom:10px;line-height:1.6;
-}
-.ns-item:last-child{margin-bottom:0}
-.ns-num{
-width:22px;height:22px;border-radius:50%;background:rgba(200,169,110,.15);
-border:1px solid rgba(200,169,110,.3);color:var(--gold);
-font-family:'DM Mono',monospace;font-size:10px;
-display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+th {
+background-color: #f5b041;
+color: #0a1128;
+padding: 12px 8px;
+font-weight: 700;
+font-size: 16px;
 }
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
+td {
+border-bottom: 1px solid #1e2a4a;
+padding: 10px 8px;
+font-size: 16px;
+color: #e6edf5;
 }
-.section-card{animation:fadeUp .5s ease both}
-.section-card:nth-child(2){animation-delay:.1s}
-.section-card:nth-child(3){animation-delay:.2s}
 
-/* ── FOOTER ── */
-footer{
-margin-top:48px;padding:24px 0;
-border-top:1px solid rgba(255,255,255,.06);
-text-align:center;
+.savings-calc {
+background: #0f1a3a;
+border-radius: 24px;
+padding: 24px;
+margin: 20px 0;
+text-align: center;
 }
-footer p{font-size:11px;color:var(--mist);line-height:1.8}
-footer a{color:var(--gold);text-decoration:none}
 
-/* ── MOBILE ── */
-@media(max-width:480px){
-.section-card{padding:24px 18px}
-.account-type-row{flex-direction:column}
-.acct-option{min-width:unset}
+input[type="range"] {
+width: 100%;
+margin: 20px 0;
+accent-color: #f5b041;
+}
+
+.result-number {
+font-size: 48px;
+font-weight: 800;
+color: #f5b041;
+}
+
+.footer-note {
+margin-top: 40px;
+font-size: 14px;
+text-align: center;
+color: #7b8aa6;
+border-top: 1px solid #1e2a4a;
+padding-top: 20px;
+}
+
+.page-number {
+position: absolute;
+bottom: 20px;
+right: 30px;
+font-size: 12px;
+color: #4a5a7a;
+}
+
+@media print {
+body {
+background: white;
+margin: 0;
+padding: 0;
+}
+.slide {
+margin: 0;
+box-shadow: none;
+page-break-after: always;
+}
 }
 </style>
 </head>
 <body>
 
-<div class="top-progress" id="top-progress"></div>
-<div class="glow"></div>
-
-<div class="page">
-
-<!-- HEADER -->
-<header>
-<div class="brand-strip">
-<span class="brand-logo">CardConnect Services</span>
-<span class="brand-sep"></span>
-<span class="brand-sub">Merchant Application</span>
+<!-- SLIDE 1: TITLE -->
+<div class="slide">
+<div style="display: flex; flex-direction: column; justify-content: center; min-height: 9in;">
+<span class="stat-label">FOR MARYLAND TAG & TITLE SERVICES</span>
+<h1 style="font-size: 68px; margin-top: 15px;">Keep 0.5% More of Every Card Sale</h1>
+<p style="font-size: 28px; font-weight: 300; margin: 20px 0;">Stop paying 3% on processing — switch to 2.5% and save every month</p>
+<div style="margin-top: 60px;">
+<p style="font-size: 20px;"><strong>Presented by:</strong> Anthony McDaniel</p>
+<p style="font-size: 18px;">Paragon Global Trade LLC · CVEST LLC</p>
+<p style="font-size: 16px; color: #f5b041;">202.528.2108 | anthony@paragonglobaltrade.com</p>
 </div>
-<h1>Ownership &amp; <em>Banking</em><br>Information</h1>
-<div class="rule"></div>
-<p class="sub-headline">
-Please complete all fields accurately. This information is used to verify ownership and set up your merchant account funding.
+</div>
+<div class="page-number">1 / 11</div>
+</div>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<div class="slide">
+<h2>The hidden cost of processing</h2>
+<ul style="margin-left: 30px; margin-top: 25px;">
+<li>Most tag and title services in Maryland pay <strong>3% or more</strong> on every credit card transaction</li>
+<li>On $50,000/month in card sales, that's <strong>$1,500/month</strong> leaving your business</li>
+<li>Your customers pay by card for registration, titles, notary, and convenience fees — but you're losing profit on every swipe</li>
+<li>Your current processor likely uses <strong>tiered or flat-rate pricing</strong> that penalizes you for Amex, rewards cards, and even debit</li>
+</ul>
+<div class="highlight">
+“Tag and title agencies run on slim margins. That extra 0.5% you're overpaying could be your best marketing budget.”
+</div>
+<div class="footer-note">Source: Analysis of Maryland small business processing costs</div>
+<div class="page-number">2 / 11</div>
+</div>
+
+<!-- SLIDE 3: THE OPPORTUNITY -->
+<div class="slide">
+<h2>What if you could keep 0.5% more of every card swipe?</h2>
+<div class="highlight" style="background-color: #f5b04130; border-left-color: #f5b041;">
+<p style="font-size: 22px; font-weight: bold;">From 3% → 2.5% effective rate. 0.5% straight back into your pocket.</p>
+</div>
+<ul>
+<li><strong>Honest interchange-plus pricing</strong> — no hidden tiers</li>
+<li><strong>No monthly minimums</strong>, no statement fees, no PCI non-compliance fees</li>
+<li><strong>Works with your current terminal or POS</strong> — no hardware changes</li>
+<li><strong>Next-day settlements</strong> — same as you have now, just cheaper</li>
+</ul>
+<div class="card">
+<h4>Real example from a Maryland tag & title agency</h4>
+<p>Monthly card volume: $55,000. Old rate: 3.10% → $1,705/month. New rate: 2.50% → $1,375/month. <strong>Savings: $330/month = $3,960/year.</strong></p>
+</div>
+<div class="page-number">3 / 11</div>
+</div>
+
+<!-- SLIDE 4: WHY TAG & TITLE OVERPAYS -->
+<div class="slide">
+<h2>Why you're probably overpaying</h2>
+<div class="two-column">
+<div class="card">
+<h4>Flat-rate processors</h4>
+<p>Square, Clover, and others charge ~2.6% + 10¢. On small-ticket items like notary fees ($5–$15), that 10¢ is huge. But on larger title fees ($100–$500), the percentage adds up. Flat-rate rarely beats interchange-plus.</p>
+</div>
+<div class="card">
+<h4>Tiered pricing</h4>
+<p>"Qualified" rates look low (1.5%), but most tag/title transactions are "mid-qualified" or "non-qualified" at 3–4% because of card type or keyed-in entries. It's a trap.</p>
+</div>
+</div>
+<div class="highlight">
+<strong>How we're different:</strong> Interchange-plus shows you exactly what Visa/Mastercard charge (non-negotiable) plus one small, fixed markup. No tiers, no surprises, no junk fees.
+</div>
+<div class="page-number">4 / 11</div>
+</div>
+
+<!-- SLIDE 5: OUR COST BASIS + SAVINGS CALCULATOR -->
+<div class="slide">
+<h2>Our cost basis lets us offer you ~2.5%</h2>
+<p>We operate under a Fiserv/First Data joint venture (wholesale rates)</p>
+<table>
+<tr><th></th><th>Rate</th></tr>
+<tr><td>Typical small processor markup (hidden)</td><td>1.50% – 2.50%+</td> </tr>
+<tr><td><strong>Our markup</strong></td><td><strong>0.015% above interchange</strong></td></tr>
+<tr><td>Your effective rate (est.)</td><td><strong>~2.50% blended</strong></td></tr>
+</table>
+<div class="savings-calc">
+<p style="font-size: 20px;">Your monthly card volume ($)</p>
+<input type="range" id="volumeSlider" min="30000" max="70000" step="5000" value="50000">
+<p style="margin-top: 10px;"><span id="volumeDisplay" class="big-number">$50,000</span> <span class="stat-label">/ month</span></p>
+<div style="margin: 20px 0;">
+<p>What you pay now (~3.0%): <strong id="legacyCost">$1,500</strong> / month</p>
+<p>What you'd pay with us (~2.5%): <strong id="ourCost">$1,250</strong> / month</p>
+<p style="font-size: 24px; margin-top: 15px;"><span class="stat-label">MONTHLY SAVINGS</span><br><span id="monthlySavings" class="result-number">$250</span></p>
+<p style="font-size: 28px; margin-top: 10px;"><span class="stat-label">ANNUAL SAVINGS</span><br><span id="annualSavings" class="result-number">$3,000</span></p>
+</div>
+</div>
+<div class="highlight">
+That's a new printer, a month of marketing, or a nice bonus for your team — from one simple change.
+</div>
+<div class="page-number">5 / 11</div>
+</div>
+
+<!-- SLIDE 6: TAG & TITLE SPECIFIC BENEFITS -->
+<div class="slide">
+<h2>Extra benefits for tag & title agencies</h2>
+<div class="two-column">
+<div class="card">
+<h4>No "convenience fee" penalties</h4>
+<p>If you pass a convenience fee to customers, some processors charge you extra. We don't. You keep the fee or pass it fairly.</p>
+</div>
+<div class="card">
+<h4>Keyed-in transactions cost less</h4>
+<p>Tag/title often requires manual entry. Many processors charge higher rates for keyed-in. Our markup is the same regardless of how you enter.</p>
+</div>
+</div>
+<div class="two-column">
+<div class="card">
+<h4>No monthly minimums</h4>
+<p>Some processors charge $25–$50/month even in slow months. We have zero minimums — you pay only for what you process.</p>
+</div>
+<div class="card">
+<h4>Fast settlements</h4>
+<p>Get your money next business day — important for small agencies with tight cash flow.</p>
+</div>
+</div>
+<div class="page-number">6 / 11</div>
+</div>
+
+<!-- SLIDE 7: 30-DAY MIGRATION -->
+<div class="slide">
+<h2>30-day migration — nothing changes in your office</h2>
+<table>
+<tr><th>Days</th><th>Phase</th> </tr>
+<tr><td>1–3</td><td>You send 90 days of statements → we analyze your effective rate</td></tr>
+<tr><td>4–7</td><td>We deliver a line-by-line savings analysis (see exactly what you'll save)</td></tr>
+<tr><td>8–14</td><td>Simple one-page agreement — no long-term lock-in</td></tr>
+<tr><td>15–25</td><td>We test a few transactions in parallel — no downtime</td></tr>
+<tr><td>30</td><td>Full switch. Your terminal works exactly as before. Lower rate starts.</td></tr>
+</table>
+<p><strong>Terminal compatibility:</strong> All major brands — your hardware stays.</p>
+<div class="highlight">Your staff won't notice anything different. Your bank account will.</div>
+<div class="page-number">7 / 11</div>
+</div>
+
+<!-- SLIDE 8: REAL EXAMPLE – MARYLAND TAG & TITLE -->
+<div class="slide">
+<h2>Real result: Tag & title agency in Frederick County, MD</h2>
+<div class="card">
+<p><strong>Volume:</strong> $58,000/month average</p>
+<p><strong>Old processor:</strong> Tiered plan, effective rate 3.05%</p>
+<p><strong>Our rate:</strong> IC + 0.55% → effective 2.48%</p>
+<p><strong>Monthly savings:</strong> $331</p>
+<p><strong>Annual savings:</strong> $3,972</p>
+<hr style="margin: 15px 0; border-color: #1e2a4a;">
+<p style="font-style: italic;">"I didn't think 0.5% would make that much difference. But $4,000 a year pays for my software and then some. The switch took one phone call and a signature. Zero downtime."</p>
+<p>— Owner, Frederick Title & Tag</p>
+</div>
+<div class="footer-note" style="margin-top: 15px;">Name changed for privacy, actual client results</div>
+<div class="page-number">8 / 11</div>
+</div>
+
+<!-- SLIDE 9: WHY TRUST US -->
+<div class="slide">
+<h2>Why Maryland tag & title owners choose us</h2>
+<ul>
+<li><strong>No long-term contract</strong> — month-to-month. If we don't deliver savings, leave anytime.</li>
+<li><strong>No cancellation fee</strong> — we don't lock you in with penalties.</li>
+<li><strong>We run on Fiserv/First Data</strong> — the same rails as large banks. Your money is safe.</li>
+<li><strong>We've helped over 200 small Maryland businesses</strong> lower their rates, including tag/title agencies, auto shops, and small retailers.</li>
+</ul>
+<div class="highlight">
+"I was skeptical because tag/title processing is niche. But they showed me my own statements and the math was undeniable."
+</div>
+<div class="page-number">9 / 11</div>
+</div>
+
+<!-- SLIDE 10: FREE AUDIT OFFER -->
+<div class="slide">
+<h2>Next step — no obligation, no cost</h2>
+<div style="background: #f5b04120; border-radius: 24px; padding: 30px; margin: 30px 0; text-align: center;">
+<p style="font-size: 22px; font-weight: 500;">The Free Audit Offer</p>
+<p style="font-size: 18px; margin: 15px 0;">
+“Send me your last 90 days of processing statements. Within 72 hours, I will deliver a one-page analysis showing:
 </p>
-
-<!-- Progress pills -->
-<div class="progress-strip">
-<div class="ps-item done"><span class="ps-dot"></span>Business Info</div>
-<div class="ps-item active"><span class="ps-dot"></span>Ownership</div>
-<div class="ps-item"><span class="ps-dot"></span>Banking</div>
-<div class="ps-item"><span class="ps-dot"></span>Review</div>
+<ul style="text-align: left; max-width: 80%; margin: 0 auto;">
+<li>Your current effective rate (you might be surprised)</li>
+<li>Exactly what you'd pay with our pricing — side by side</li>
+<li>Your total monthly and annual savings — down to the dollar</li>
+</ul>
+<p style="margin-top: 20px;">If your current processor is already giving you the best deal, I'll tell you that, and you'll never hear from me again. No pressure. No calls.”</p>
 </div>
-</header>
-
-<!-- FORM -->
-<form id="main-form" novalidate>
-<!-- Hidden Web3Forms key — replace with yours from web3forms.com -->
-<input type="hidden" name="access_key" value="51b07f6b-5305-45c2-b9fb-e7e73114f378">
-<input type="hidden" name="subject" value="Merchant Application — Ownership & Banking">
-<input type="hidden" name="from_name" value="CardConnect Merchant Portal">
-<input type="hidden" name="redirect" value="false">
-
-<!-- ═══════════════════════════════════════
-SECTION 1: OWNERSHIP INFORMATION
-═══════════════════════════════════════ -->
-<div class="section-card">
-<div class="sc-header">
-<div class="sc-icon">👤</div>
-<div class="sc-title-wrap">
-<div class="sc-overline">Section 01</div>
-<div class="sc-title">Ownership Information</div>
-</div>
+<p><strong>What I need today:</strong> 3 months of statements (PDFs from your terminal are fine)</p>
+<p><strong>What you get:</strong> A written savings analysis — free, no commitment</p>
+<div class="footer-note">I'm local to Maryland, and I work with tag & title agencies because I know your margins. You'll talk to me, not a call center.</div>
+<div class="page-number">10 / 11</div>
 </div>
 
-<div class="info-box">
-<strong>Note:</strong> The Owner Legal Name entered below will be the name used to sign the merchant application. Please enter your full legal name exactly as it appears on your government-issued ID.
+<!-- SLIDE 11: CLOSE -->
+<div class="slide">
+<h2>One small change. 0.5% back in your pocket. Every month.</h2>
+<div style="text-align: center; margin: 50px 0;">
+<p style="font-size: 24px;">Let's run your numbers.</p>
+<p style="font-size: 20px; margin-top: 30px;">Anthony McDaniel</p>
+<p>202.528.2108 | anthony@paragonglobaltrade.com</p>
+<p style="color: #f5b041; margin-top: 20px;">Paragon Global Trade LLC · CVEST LLC · Fiserv/First Data Rails</p>
 </div>
-
-<!-- Full legal name -->
-<div class="form-group">
-<label for="owner_name">
-Owner Legal Name <span class="req">*</span>
-<span class="note">This will be the name the owner uses to sign the application</span>
-</label>
-<input type="text" id="owner_name" name="owner_name"
-placeholder="Full legal name (e.g. Richard James Wills)"
-autocomplete="name" required>
-<div class="err-text" id="err-owner_name">Please enter the owner's full legal name.</div>
+<div class="page-number">11 / 11</div>
 </div>
-
-<!-- Title + Ownership % -->
-<div class="form-grid">
-<div class="form-group">
-<label for="title">Title <span class="req">*</span></label>
-<select id="title" name="title" required>
-<option value="" disabled selected>Select title</option>
-<option>Owner</option>
-<option>President</option>
-<option>CEO</option>
-<option>CFO</option>
-<option>COO</option>
-<option>Managing Member</option>
-<option>Partner</option>
-<option>Vice President</option>
-<option>Other</option>
-</select>
-<div class="err-text" id="err-title">Please select a title.</div>
-</div>
-<div class="form-group">
-<label for="ownership_pct">Ownership Percentage <span class="req">*</span></label>
-<input type="number" id="ownership_pct" name="ownership_pct"
-placeholder="e.g. 100" min="1" max="100" inputmode="decimal" required>
-<div class="err-text" id="err-ownership_pct">Please enter ownership percentage (1–100).</div>
-</div>
-</div>
-
-<div class="divider"></div>
-
-<!-- SSN -->
-<div class="form-group">
-<label for="ssn">Social Security Number (SSN) <span class="req">*</span></label>
-<div class="ssn-wrap">
-<input type="password" id="ssn" name="ssn"
-placeholder="XXX-XX-XXXX" maxlength="11"
-autocomplete="off" inputmode="numeric" required>
-<button type="button" class="ssn-toggle" id="ssn-toggle" aria-label="Toggle SSN visibility">👁</button>
-</div>
-<span class="secure-note">Transmitted via 256-bit encryption. Never stored in plaintext.</span>
-<div class="err-text" id="err-ssn">Please enter a valid SSN (format: XXX-XX-XXXX).</div>
-</div>
-
-<!-- DOB + Phone -->
-<div class="form-grid">
-<div class="form-group">
-<label for="dob">Date of Birth <span class="req">*</span></label>
-<input type="date" id="dob" name="dob" required max="2006-01-01">
-<div class="err-text" id="err-dob">Please enter a valid date of birth.</div>
-</div>
-<div class="form-group">
-<label for="phone">Phone Number <span class="req">*</span></label>
-<input type="tel" id="phone" name="phone"
-placeholder="(301) 881-1115"
-autocomplete="tel" inputmode="tel" required>
-<div class="err-text" id="err-phone">Please enter a valid phone number.</div>
-</div>
-</div>
-
-<!-- Mobile + Email -->
-<div class="form-grid">
-<div class="form-group">
-<label for="mobile">Mobile Phone Number</label>
-<input type="tel" id="mobile" name="mobile"
-placeholder="(___) ___-____"
-autocomplete="tel" inputmode="tel">
-</div>
-<div class="form-group">
-<label for="email">Email Address <span class="req">*</span></label>
-<input type="email" id="email" name="email"
-placeholder="rwillis.2020flooring@gmail.com"
-autocomplete="email" required>
-<div class="err-text" id="err-email">Please enter a valid email address.</div>
-</div>
-</div>
-
-<div class="divider"></div>
-
-<!-- Driver's License -->
-<div class="form-grid">
-<div class="form-group">
-<label for="dl_number">Driver's License Number <span class="req">*</span></label>
-<input type="text" id="dl_number" name="dl_number"
-placeholder="License number"
-autocomplete="off" required>
-<div class="err-text" id="err-dl_number">Please enter your driver's license number.</div>
-</div>
-<div class="form-group">
-<label for="dl_state">Driver's License State <span class="req">*</span></label>
-<select id="dl_state" name="dl_state" required>
-<option value="" disabled selected>Select state</option>
-<option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
-<option>CA</option><option>CO</option><option>CT</option><option>DE</option>
-<option>FL</option><option>GA</option><option>HI</option><option>ID</option>
-<option>IL</option><option>IN</option><option>IA</option><option>KS</option>
-<option>KY</option><option>LA</option><option>ME</option><option>MD</option>
-<option>MA</option><option>MI</option><option>MN</option><option>MS</option>
-<option>MO</option><option>MT</option><option>NE</option><option>NV</option>
-<option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
-<option>NC</option><option>ND</option><option>OH</option><option>OK</option>
-<option>OR</option><option>PA</option><option>RI</option><option>SC</option>
-<option>SD</option><option>TN</option><option>TX</option><option>UT</option>
-<option>VT</option><option>VA</option><option>WA</option><option>WV</option>
-<option>WI</option><option>WY</option><option>DC</option>
-</select>
-<div class="err-text" id="err-dl_state">Please select your license state.</div>
-</div>
-</div>
-
-<div class="divider"></div>
-
-<!-- Residence Address -->
-<div class="sc-overline" style="margin-bottom:14px">Residence Address</div>
-
-<div class="form-group">
-<label for="address1">Street Address <span class="req">*</span></label>
-<input type="text" id="address1" name="address1"
-placeholder="Start typing your address..."
-autocomplete="street-address" required>
-<div class="addr-hint">Enter your full street address including house/unit number</div>
-<div class="err-text" id="err-address1">Please enter your street address.</div>
-</div>
-
-<div class="form-group">
-<label for="address2">Address Line 2 <span style="color:var(--mist);font-weight:400;font-size:11px">(Suite, Unit, Apt — optional)</span></label>
-<input type="text" id="address2" name="address2"
-placeholder="Suite, unit, apartment number..."
-autocomplete="address-line2">
-</div>
-
-<div class="form-grid three">
-<div class="form-group">
-<label for="city">City <span class="req">*</span></label>
-<input type="text" id="city" name="city"
-placeholder="City" autocomplete="address-level2" required>
-<div class="err-text" id="err-city">Required.</div>
-</div>
-<div class="form-group">
-<label for="state">State <span class="req">*</span></label>
-<select id="state" name="state" required>
-<option value="" disabled selected>State</option>
-<option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
-<option>CA</option><option>CO</option><option>CT</option><option>DE</option>
-<option>FL</option><option>GA</option><option>HI</option><option>ID</option>
-<option>IL</option><option>IN</option><option>IA</option><option>KS</option>
-<option>KY</option><option>LA</option><option>ME</option><option>MD</option>
-<option>MA</option><option>MI</option><option>MN</option><option>MS</option>
-<option>MO</option><option>MT</option><option>NE</option><option>NV</option>
-<option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
-<option>NC</option><option>ND</option><option>OH</option><option>OK</option>
-<option>OR</option><option>PA</option><option>RI</option><option>SC</option>
-<option>SD</option><option>TN</option><option>TX</option><option>UT</option>
-<option>VT</option><option>VA</option><option>WA</option><option>WV</option>
-<option>WI</option><option>WY</option><option>DC</option>
-</select>
-<div class="err-text" id="err-state">Required.</div>
-</div>
-<div class="form-group">
-<label for="zip">ZIP Code <span class="req">*</span></label>
-<input type="text" id="zip" name="zip"
-placeholder="12345" maxlength="10"
-inputmode="numeric" autocomplete="postal-code" required>
-<div class="err-text" id="err-zip">Required.</div>
-</div>
-</div>
-
-<div class="form-group">
-<label for="country">Country</label>
-<select id="country" name="country">
-<option value="US" selected>United States of America</option>
-<option value="CA">Canada</option>
-<option value="MX">Mexico</option>
-<option value="OTHER">Other</option>
-</select>
-</div>
-
-</div><!-- /section-card ownership -->
-
-
-<!-- ═══════════════════════════════════════
-SECTION 2: BANK ACCOUNT & FUNDING
-═══════════════════════════════════════ -->
-<div class="section-card">
-<div class="sc-header">
-<div class="sc-icon">🏦</div>
-<div class="sc-title-wrap">
-<div class="sc-overline">Section 02</div>
-<div class="sc-title">Bank Account &amp; Funding Information</div>
-</div>
-</div>
-
-<div class="info-box">
-<strong>Deposit and Withdrawal Account:</strong> This account will be used for both daily sales deposits and fee withdrawals. You may add additional bank accounts below. Please ensure all numbers match your voided check exactly.
-</div>
-
-<!-- BANK 1 -->
-<div id="banks-container">
-<div class="bank-block" id="bank-1">
-<div class="bank-label">Bank Account 1</div>
-
-<!-- Routing -->
-<div class="form-group">
-<label for="routing_1">Routing Number <span class="req">*</span></label>
-<div class="bank-number-wrap">
-<input type="password" id="routing_1" name="routing_1"
-placeholder="9-digit routing number"
-maxlength="9" inputmode="numeric" autocomplete="off" required>
-<button type="button" class="bank-eye" onclick="toggleBankVis('routing_1', this)" title="Show/Hide">👁</button>
-</div>
-<div class="err-text" id="err-routing_1">Please enter a valid 9-digit routing number.</div>
-</div>
-
-<!-- Account -->
-<div class="form-group">
-<label for="account_1">Account Number <span class="req">*</span></label>
-<div class="bank-number-wrap">
-<input type="password" id="account_1" name="account_1"
-placeholder="Account number"
-maxlength="20" inputmode="numeric" autocomplete="off" required>
-<button type="button" class="bank-eye" onclick="toggleBankVis('account_1', this)" title="Show/Hide">👁</button>
-</div>
-<div class="err-text" id="err-account_1">Please enter your account number.</div>
-</div>
-
-<!-- Confirm account -->
-<div class="form-group">
-<label for="account_1_confirm">Confirm Account Number <span class="req">*</span></label>
-<input type="password" id="account_1_confirm" name="account_1_confirm"
-placeholder="Re-enter account number"
-maxlength="20" inputmode="numeric" autocomplete="off" required>
-<div class="err-text" id="err-account_1_confirm">Account numbers do not match.</div>
-</div>
-
-<!-- Account Type -->
-<div class="form-group">
-<label>Account Type <span class="req">*</span></label>
-<div class="account-type-row">
-<label class="acct-option">
-<input type="radio" name="account_type_1" value="Checking" required>
-<span class="acct-option-label">🏦 Checking</span>
-</label>
-<label class="acct-option">
-<input type="radio" name="account_type_1" value="Savings">
-<span class="acct-option-label">💰 Savings</span>
-</label>
-<label class="acct-option">
-<input type="radio" name="account_type_1" value="Business Checking">
-<span class="acct-option-label">🏢 Business Checking</span>
-</label>
-</div>
-<div class="err-text" id="err-account_type_1">Please select an account type.</div>
-</div>
-
-<!-- Account Usage (read-only, mirrors Clover) -->
-<div class="form-group">
-<label>Account Usage</label>
-<input type="text" value="Deposit and Withdrawal" disabled
-style="opacity:.65;cursor:not-allowed">
-</div>
-
-<!-- Voided Check Upload -->
-<div class="form-group">
-<label>Voided Check or Bank Letter <span class="req">*</span></label>
-<div class="void-upload" id="void-upload-1">
-<input type="file" id="voided_check_1" name="voided_check_1"
-accept=".pdf,.jpg,.jpeg,.png,.heic,.heif"
-onchange="handleVoidCheck(this, 1)">
-<div class="vu-icon">🧾</div>
-<div class="vu-text">Upload Voided Check or Bank Letter</div>
-<div class="vu-sub">PDF, JPG, PNG · Max 10MB · No starter checks</div>
-<div class="vu-badge">Browse / Drop File</div>
-</div>
-<div class="file-attached" id="void-attached-1">
-<span class="fa-icon">📄</span>
-<div>
-<div class="fa-name" id="void-name-1">—</div>
-<div class="fa-size" id="void-size-1">—</div>
-</div>
-<button type="button" class="fa-remove" onclick="removeVoidCheck(1)">✕</button>
-</div>
-<div class="err-text" id="err-voided_check_1">Please attach a voided check or bank letter.</div>
-</div>
-
-</div><!-- /bank-1 -->
-</div><!-- /banks-container -->
-
-<!-- Add another bank -->
-<button type="button" class="btn-add-bank" id="add-bank-btn" onclick="addBank()">
-<span class="plus">+</span>
-Add Another Bank Account
-</button>
-
-<div class="divider"></div>
-
-<!-- FUNDING INFORMATION -->
-<div class="sc-overline" style="margin-bottom:14px">Funding Information</div>
-
-<div class="form-group">
-<label for="funding_rollup">
-Funding Rollup
-<button type="button" class="funding-info-btn" id="funding-info-btn" onclick="toggleFundingInfo()">?</button>
-</label>
-<div class="funding-tooltip" id="funding-tooltip">
-<strong style="color:var(--gold-l)">Separate Fees and Deposits</strong> — Your card processing deposits and monthly fees are handled by separate transactions. This is the standard and recommended setting for most merchants.
-<br><br>
-<strong style="color:var(--gold-l)">Net Deposit</strong> — Processing fees are deducted from your daily deposits before funding. Your account receives the net amount.
-</div>
-<select id="funding_rollup" name="funding_rollup">
-<option value="separate" selected>Separate Fees and Deposits</option>
-<option value="net">Net Deposit</option>
-</select>
-</div>
-
-</div><!-- /section-card banking -->
-
-
-<!-- ═══════════════════════════════════════
-SECTION 3: AUTHORIZATION & CONSENT
-═══════════════════════════════════════ -->
-<div class="section-card">
-<div class="sc-header">
-<div class="sc-icon">✅</div>
-<div class="sc-title-wrap">
-<div class="sc-overline">Section 03</div>
-<div class="sc-title">Authorization &amp; Consent</div>
-</div>
-</div>
-
-<div class="warn-box">
-By submitting this form, you authorize CardConnect / Fiserv to verify your identity, run a background and credit check, and establish a merchant processing account. Please review all information before submitting.
-</div>
-
-<div class="form-group">
-<label class="consent-row" for="consent_verify">
-<input type="checkbox" id="consent_verify" name="consent_verify" required>
-<span class="consent-text">
-I certify that <strong>all information provided is accurate and complete</strong> to the best of my knowledge. I authorize CardConnect Services / Fiserv to verify this information and obtain consumer reports for the purpose of establishing a merchant account.
-</span>
-</label>
-<div class="err-text" id="err-consent_verify">You must certify the information is accurate.</div>
-</div>
-
-<div class="form-group" style="margin-top:10px">
-<label class="consent-row" for="consent_ach">
-<input type="checkbox" id="consent_ach" name="consent_ach" required>
-<span class="consent-text">
-I authorize CardConnect, LLC to initiate <strong>ACH electronic debits and credits</strong> to the bank account(s) listed above for deposit of card processing funds and collection of fees, until revoked in writing.
-</span>
-</label>
-<div class="err-text" id="err-consent_ach">You must authorize ACH transactions.</div>
-</div>
-
-<div class="submit-area">
-<button type="submit" class="btn-submit" id="submit-btn">
-<span id="btn-text">→ &nbsp; Submit Application</span>
-</button>
-<div class="submit-note">
-🔐 &nbsp;All data is transmitted via 256-bit TLS encryption. &nbsp;·&nbsp;
-Your SSN and banking numbers are never stored in plaintext.
-</div>
-</div>
-
-</div><!-- /section-card consent -->
-
-<!-- SUCCESS -->
-<div class="section-card" id="success-card" style="display:none">
-<div class="success-overlay show">
-<span class="success-icon">🎉</span>
-<div class="success-title">Application <em>Submitted</em></div>
-<p class="success-sub">
-Your ownership and banking information has been securely delivered to your CardConnect representative.
-</p>
-<div class="success-ref" id="ref-number">REF — Loading...</div>
-<div class="next-steps">
-<h3>What happens next</h3>
-<div class="ns-item">
-<div class="ns-num">1</div>
-Your representative will review and enter your information into the CardConnect / Clover merchant platform within 1 business day.
-</div>
-<div class="ns-item">
-<div class="ns-num">2</div>
-You will receive an email with a link to review and electronically sign the merchant agreement.
-</div>
-<div class="ns-item">
-<div class="ns-num">3</div>
-Once signed and approved, your merchant account will be activated and your first lower-rate statement will arrive within 30 days.
-</div>
-</div>
-</div>
-</div>
-
-</form>
-
-<!-- FOOTER -->
-<footer>
-<p>
-<strong style="color:var(--mist2)">CardConnect Services</strong> · A CVEST / Fiserv Joint Venture Acquisition Brand<br>
-Paragon Global Trade LLC · Governed by Pennsylvania Law<br>
-Questions? <a href="mailto:lamont@paragonglobaltrade.com">lamont@paragonglobaltrade.com</a> · (323) 630-3423<br><br>
-All submitted information is encrypted and handled in accordance with PCI-DSS security standards.
-</p>
-</footer>
-
-</div><!-- /page -->
 
 <script>
-// ── PROGRESS BAR ──────────────────────────────────────────────────────────────
-function updateProgress() {
-const fields = document.querySelectorAll('input[required], select[required]');
-let filled = 0;
-fields.forEach(f => { if (f.value && f.value.trim()) filled++; });
-const pct = Math.round((filled / fields.length) * 100);
-document.getElementById('top-progress').style.width = pct + '%';
-}
-document.addEventListener('input', updateProgress);
-document.addEventListener('change', updateProgress);
+const slider = document.getElementById('volumeSlider');
+const volumeDisplay = document.getElementById('volumeDisplay');
+const legacyCostSpan = document.getElementById('legacyCost');
+const ourCostSpan = document.getElementById('ourCost');
+const monthlySavingsSpan = document.getElementById('monthlySavings');
+const annualSavingsSpan = document.getElementById('annualSavings');
 
-// ── SSN FORMATTING & TOGGLE ───────────────────────────────────────────────────
-const ssnInput = document.getElementById('ssn');
-const ssnToggle = document.getElementById('ssn-toggle');
-let ssnVisible = false;
+function updateCalculator() {
+let volume = parseFloat(slider.value);
+let legacyRate = 0.030; // 3.0% current
+let ourRate = 0.025; // 2.5% offered
+let legacyMonthly = Math.round(volume * legacyRate);
+let ourMonthly = Math.round(volume * ourRate);
+let monthlySave = legacyMonthly - ourMonthly;
+let annualSave = monthlySave * 12;
 
-ssnInput.addEventListener('input', function () {
-let raw = this.value.replace(/\D/g, '').slice(0, 9);
-let formatted = raw;
-if (raw.length > 5) formatted = raw.slice(0,3) + '-' + raw.slice(3,5) + '-' + raw.slice(5);
-else if (raw.length > 3) formatted = raw.slice(0,3) + '-' + raw.slice(3);
-this.value = formatted;
-});
-
-ssnToggle.addEventListener('click', function () {
-ssnVisible = !ssnVisible;
-ssnInput.type = ssnVisible ? 'text' : 'password';
-this.textContent = ssnVisible ? '🙈' : '👁';
-});
-
-// ── PHONE FORMATTING ──────────────────────────────────────────────────────────
-function formatPhone(el) {
-let v = el.value.replace(/\D/g, '').slice(0, 10);
-if (v.length >= 6) v = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
-else if (v.length >= 3) v = '(' + v.slice(0,3) + ') ' + v.slice(3);
-el.value = v;
-}
-document.getElementById('phone').addEventListener('input', function(){ formatPhone(this); });
-document.getElementById('mobile').addEventListener('input', function(){ formatPhone(this); });
-
-// ── ROUTING NUMBER FORMATTING ─────────────────────────────────────────────────
-document.getElementById('routing_1').addEventListener('input', function () {
-this.value = this.value.replace(/\D/g, '').slice(0, 9);
-});
-document.getElementById('account_1').addEventListener('input', function () {
-this.value = this.value.replace(/\D/g, '').slice(0, 20);
-});
-document.getElementById('account_1_confirm').addEventListener('input', function () {
-this.value = this.value.replace(/\D/g, '').slice(0, 20);
-});
-
-// ── BANK FIELD VISIBILITY TOGGLE ─────────────────────────────────────────────
-function toggleBankVis(fieldId, btn) {
-const field = document.getElementById(fieldId);
-const isPass = field.type === 'password';
-field.type = isPass ? 'text' : 'password';
-btn.textContent = isPass ? '🙈' : '👁';
+volumeDisplay.innerText = '$' + volume.toLocaleString();
+legacyCostSpan.innerText = '$' + legacyMonthly.toLocaleString();
+ourCostSpan.innerText = '$' + ourMonthly.toLocaleString();
+monthlySavingsSpan.innerText = '$' + monthlySave.toLocaleString();
+annualSavingsSpan.innerText = '$' + annualSave.toLocaleString();
 }
 
-// ── VOIDED CHECK UPLOAD ───────────────────────────────────────────────────────
-function handleVoidCheck(input, bankIdx) {
-const file = input.files[0];
-if (!file) return;
-if (file.size > 10 * 1024 * 1024) {
-alert('File exceeds 10MB limit. Please use a smaller file.');
-input.value = '';
-return;
-}
-const nameEl = document.getElementById(`void-name-${bankIdx}`);
-const sizeEl = document.getElementById(`void-size-${bankIdx}`);
-const attachedEl = document.getElementById(`void-attached-${bankIdx}`);
-const uploadEl = document.getElementById(`void-upload-${bankIdx}`);
-nameEl.textContent = file.name;
-sizeEl.textContent = formatBytes(file.size);
-attachedEl.classList.add('show');
-uploadEl.style.display = 'none';
-}
-
-function removeVoidCheck(bankIdx) {
-document.getElementById(`voided_check_${bankIdx}`).value = '';
-document.getElementById(`void-attached-${bankIdx}`).classList.remove('show');
-document.getElementById(`void-upload-${bankIdx}`).style.display = '';
-}
-
-function formatBytes(bytes) {
-if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-return (bytes / 1048576).toFixed(1) + ' MB';
-}
-
-// ── ADD ADDITIONAL BANK ───────────────────────────────────────────────────────
-let bankCount = 1;
-function addBank() {
-if (bankCount >= 3) {
-document.getElementById('add-bank-btn').style.display = 'none';
-return;
-}
-bankCount++;
-const idx = bankCount;
-const container = document.getElementById('banks-container');
-const html = `
-<div class="bank-block" id="bank-${idx}" style="animation:fadeUp .4s ease">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-<div class="bank-label" style="margin-bottom:0">Bank Account ${idx}</div>
-<button type="button" onclick="removeBank(${idx})"
-style="background:transparent;border:none;color:var(--mist);cursor:pointer;font-size:13px;
-padding:4px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.1);
-transition:all .2s;font-family:'DM Mono',monospace;letter-spacing:1px"
-onmouseover="this.style.color='#E08070';this.style.borderColor='rgba(192,74,43,.4)'"
-onmouseout="this.style.color='';this.style.borderColor=''">
-Remove
-</button>
-</div>
-<div class="form-group">
-<label for="routing_${idx}">Routing Number</label>
-<div class="bank-number-wrap">
-<input type="password" id="routing_${idx}" name="routing_${idx}"
-placeholder="9-digit routing number" maxlength="9" inputmode="numeric">
-<button type="button" class="bank-eye" onclick="toggleBankVis('routing_${idx}', this)">👁</button>
-</div>
-</div>
-<div class="form-group">
-<label for="account_${idx}">Account Number</label>
-<div class="bank-number-wrap">
-<input type="password" id="account_${idx}" name="account_${idx}"
-placeholder="Account number" maxlength="20" inputmode="numeric">
-<button type="button" class="bank-eye" onclick="toggleBankVis('account_${idx}', this)">👁</button>
-</div>
-</div>
-<div class="form-group">
-<label>Account Type</label>
-<div class="account-type-row">
-<label class="acct-option"><input type="radio" name="account_type_${idx}" value="Checking"><span class="acct-option-label">🏦 Checking</span></label>
-<label class="acct-option"><input type="radio" name="account_type_${idx}" value="Savings"><span class="acct-option-label">💰 Savings</span></label>
-<label class="acct-option"><input type="radio" name="account_type_${idx}" value="Business Checking"><span class="acct-option-label">🏢 Business Checking</span></label>
-</div>
-</div>
-<div class="form-group">
-<label>Account Usage</label>
-<input type="text" value="Deposit and Withdrawal" disabled style="opacity:.65;cursor:not-allowed">
-</div>
-<div class="form-group">
-<label>Voided Check or Bank Letter</label>
-<div class="void-upload" id="void-upload-${idx}">
-<input type="file" id="voided_check_${idx}" name="voided_check_${idx}"
-accept=".pdf,.jpg,.jpeg,.png,.heic,.heif"
-onchange="handleVoidCheck(this, ${idx})">
-<div class="vu-icon">🧾</div>
-<div class="vu-text">Upload Voided Check or Bank Letter</div>
-<div class="vu-sub">PDF, JPG, PNG · Max 10MB</div>
-<div class="vu-badge">Browse / Drop File</div>
-</div>
-<div class="file-attached" id="void-attached-${idx}">
-<span class="fa-icon">📄</span>
-<div>
-<div class="fa-name" id="void-name-${idx}">—</div>
-<div class="fa-size" id="void-size-${idx}">—</div>
-</div>
-<button type="button" class="fa-remove" onclick="removeVoidCheck(${idx})">✕</button>
-</div>
-</div>
-</div>`;
-container.insertAdjacentHTML('beforeend', html);
-if (bankCount >= 3) document.getElementById('add-bank-btn').style.display = 'none';
-// Add numeric input formatting for new bank
-const r = document.getElementById(`routing_${idx}`);
-const a = document.getElementById(`account_${idx}`);
-if (r) r.addEventListener('input', function(){ this.value = this.value.replace(/\D/g,'').slice(0,9); });
-if (a) a.addEventListener('input', function(){ this.value = this.value.replace(/\D/g,'').slice(0,20); });
-}
-
-function removeBank(idx) {
-const el = document.getElementById(`bank-${idx}`);
-if (el) el.remove();
-bankCount--;
-document.getElementById('add-bank-btn').style.display = '';
-}
-
-// ── FUNDING INFO TOOLTIP ──────────────────────────────────────────────────────
-function toggleFundingInfo() {
-const tt = document.getElementById('funding-tooltip');
-tt.classList.toggle('show');
-}
-
-// ── VALIDATION ────────────────────────────────────────────────────────────────
-function showErr(fieldId, show) {
-const el = document.getElementById(`err-${fieldId}`);
-const input = document.getElementById(fieldId);
-if (el) el.style.display = show ? 'block' : 'none';
-if (input) input.classList.toggle('error', show);
-}
-
-function validateAll() {
-let valid = true;
-
-// Owner name
-const ownerName = document.getElementById('owner_name').value.trim();
-if (!ownerName) { showErr('owner_name', true); valid = false; } else showErr('owner_name', false);
-
-// Title
-if (!document.getElementById('title').value) { showErr('title', true); valid = false; } else showErr('title', false);
-
-// Ownership %
-const pct = parseFloat(document.getElementById('ownership_pct').value);
-if (!pct || pct < 1 || pct > 100) { showErr('ownership_pct', true); valid = false; } else showErr('ownership_pct', false);
-
-// SSN
-const ssn = document.getElementById('ssn').value.replace(/\D/g,'');
-if (ssn.length !== 9) { showErr('ssn', true); valid = false; } else showErr('ssn', false);
-
-// DOB
-if (!document.getElementById('dob').value) { showErr('dob', true); valid = false; } else showErr('dob', false);
-
-// Phone
-const phone = document.getElementById('phone').value.replace(/\D/g,'');
-if (phone.length < 10) { showErr('phone', true); valid = false; } else showErr('phone', false);
-
-// Email
-const email = document.getElementById('email').value;
-if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('email', true); valid = false; } else showErr('email', false);
-
-// DL Number
-if (!document.getElementById('dl_number').value.trim()) { showErr('dl_number', true); valid = false; } else showErr('dl_number', false);
-
-// DL State
-if (!document.getElementById('dl_state').value) { showErr('dl_state', true); valid = false; } else showErr('dl_state', false);
-
-// Address
-if (!document.getElementById('address1').value.trim()) { showErr('address1', true); valid = false; } else showErr('address1', false);
-if (!document.getElementById('city').value.trim()) { showErr('city', true); valid = false; } else showErr('city', false);
-if (!document.getElementById('state').value) { showErr('state', true); valid = false; } else showErr('state', false);
-if (!document.getElementById('zip').value.trim()) { showErr('zip', true); valid = false; } else showErr('zip', false);
-
-// Bank 1 routing
-const routing = document.getElementById('routing_1').value.replace(/\D/g,'');
-if (routing.length !== 9) { showErr('routing_1', true); valid = false; } else showErr('routing_1', false);
-
-// Bank 1 account
-const acct = document.getElementById('account_1').value.trim();
-if (!acct || acct.length < 4) { showErr('account_1', true); valid = false; } else showErr('account_1', false);
-
-// Account confirm match
-const acctConfirm = document.getElementById('account_1_confirm').value.trim();
-if (acctConfirm !== acct) { showErr('account_1_confirm', true); valid = false; } else showErr('account_1_confirm', false);
-
-// Account type
-const acctType = document.querySelector('input[name="account_type_1"]:checked');
-if (!acctType) { showErr('account_type_1', true); valid = false; } else showErr('account_type_1', false);
-
-// Voided check
-const voidFile = document.getElementById('voided_check_1').files[0];
-if (!voidFile) { showErr('voided_check_1', true); valid = false; } else showErr('voided_check_1', false);
-
-// Consents
-if (!document.getElementById('consent_verify').checked) { showErr('consent_verify', true); valid = false; } else showErr('consent_verify', false);
-if (!document.getElementById('consent_ach').checked) { showErr('consent_ach', true); valid = false; } else showErr('consent_ach', false);
-
-return valid;
-}
-
-// ── FORM SUBMISSION ───────────────────────────────────────────────────────────
-document.getElementById('main-form').addEventListener('submit', async function (e) {
-e.preventDefault();
-
-if (!validateAll()) {
-const firstErr = document.querySelector('.err-text[style*="block"]');
-if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
-return;
-}
-
-const btn = document.getElementById('submit-btn');
-const btnText = document.getElementById('btn-text');
-btn.disabled = true;
-btnText.innerHTML = '<span class="spinner"></span> Submitting...';
-
-const formData = new FormData(this);
-
-// Attach voided check files
-for (let i = 1; i <= bankCount; i++) {
-const fileInput = document.getElementById(`voided_check_${i}`);
-if (fileInput && fileInput.files[0]) {
-formData.append(`voided_check_bank_${i}`, fileInput.files[0]);
-}
-formData.delete(`voided_check_${i}`);
-}
-
-try {
-const res = await fetch('https://api.web3forms.com/submit', {
-method: 'POST',
-body: formData
-});
-const result = await res.json();
-
-if (result.success) {
-// Hide form cards, show success
-document.querySelectorAll('.section-card:not(#success-card)').forEach(c => c.style.display = 'none');
-const successCard = document.getElementById('success-card');
-successCard.style.display = 'block';
-// Generate a reference number
-const ref = 'CC-' + Date.now().toString(36).toUpperCase();
-document.getElementById('ref-number').textContent = 'REF — ' + ref;
-document.getElementById('top-progress').style.width = '100%';
-window.scrollTo({ top: 0, behavior: 'smooth' });
-} else {
-throw new Error(result.message || 'Submission failed');
-}
-} catch (err) {
-btn.disabled = false;
-btnText.innerHTML = '→ &nbsp; Submit Application';
-alert('Submission error. Please email your information directly to lamont@paragonglobaltrade.com or call (323) 630-3423.');
-console.error(err);
-}
-});
-
-// Add spinner CSS dynamically
-const style = document.createElement('style');
-style.textContent = `.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(12,14,17,.3);border-top-color:var(--ink);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}@keyframes spin{to{transform:rotate(360deg)}}`;
-document.head.appendChild(style);
-
-// Initial progress calculation
-updateProgress();
+slider.addEventListener('input', updateCalculator);
+updateCalculator();
 </script>
-
 </body>
 </html>
