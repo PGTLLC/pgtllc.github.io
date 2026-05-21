@@ -1,1316 +1,498 @@
 <!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Merchant Application — Ownership & Banking Information</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mobile Delivery &amp; Events — Enterprise Payments Advisory</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ── RESET ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-
-/* ── TOKENS ── */
+html,body{width:100%;height:100%;overflow:hidden}
 :root{
---ink: #0C0E11;
---ink2: #13171E;
---panel: #111419;
---panel2: #181D25;
---panel3: #1E2430;
---border: rgba(200,169,110,.18);
---border2: rgba(255,255,255,.09);
---gold: #C8A96E;
---gold-l: #E8D4A0;
---gold-dim: rgba(200,169,110,.07);
---white: #FFFFFF;
---off-white:#F0EDE8;
---mist: #7D8A98;
---mist2: #B2BAC6;
---red: #C04A2B;
---green: #2E8B57;
---r: 9px;
---shadow: 0 4px 32px rgba(0,0,0,.5);
-}
-
-body{
-font-family:'DM Sans',system-ui,sans-serif;
-background:var(--ink);
-color:var(--white);
-min-height:100vh;
--webkit-font-smoothing:antialiased;
--webkit-tap-highlight-color:transparent;
-overflow-x:hidden;
-}
-
-/* ── GRAIN TEXTURE ── */
-body::after{
-content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E");
-}
-
-/* ── AMBIENT GLOW ── */
-.glow{
-position:fixed;top:-300px;left:50%;transform:translateX(-50%);
-width:900px;height:600px;border-radius:50%;
-background:radial-gradient(ellipse,rgba(200,169,110,.05) 0%,transparent 70%);
-pointer-events:none;z-index:0;
-}
-
-/* ── LAYOUT ── */
-.page{
-position:relative;z-index:1;
-max-width:760px;margin:0 auto;
-padding:0 20px 80px;
-}
-
-/* ── HEADER ── */
-header{padding:40px 0 0;text-align:center;margin-bottom:36px}
-
-.brand-strip{
-display:flex;align-items:center;justify-content:center;gap:8px;
-margin-bottom:24px;
-}
-.brand-logo{
-font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;
-color:var(--gold);text-transform:uppercase;
-}
-.brand-sep{width:24px;height:1px;background:rgba(200,169,110,.3)}
-.brand-sub{font-size:11px;color:var(--mist);letter-spacing:1px}
-
-h1{
-font-family:'Cormorant Garamond',serif;
-font-size:clamp(36px,7vw,58px);font-weight:300;
-line-height:1.05;color:var(--white);letter-spacing:-.5px;
-margin-bottom:10px;
-}
-h1 em{color:var(--gold);font-style:italic}
-
-.sub-headline{
-font-size:14px;color:var(--mist2);line-height:1.6;
-max-width:500px;margin:0 auto 28px;
-}
-
-/* Gold rule */
-.rule{width:52px;height:1px;background:var(--gold);margin:0 auto 8px;opacity:.55}
-
-/* ── PROGRESS STRIP ── */
-.progress-strip{
-display:flex;align-items:center;justify-content:center;
-gap:6px;margin-bottom:36px;flex-wrap:wrap;
-}
-.ps-item{
-display:flex;align-items:center;gap:6px;
-font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;
-color:var(--mist);text-transform:uppercase;
-padding:6px 14px;border-radius:100px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.02);
-transition:all .3s;
-}
-.ps-item.active{
-border-color:rgba(200,169,110,.4);
-background:var(--gold-dim);color:var(--gold);
-}
-.ps-item.done{
-border-color:rgba(46,139,87,.3);
-background:rgba(46,139,87,.08);color:var(--green);
-}
-.ps-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
-
-/* ── SECTION CARDS ── */
-.section-card{
-background:var(--panel);
-border:1px solid var(--border);
-border-radius:16px;
-padding:32px 28px;
-margin-bottom:20px;
-position:relative;overflow:hidden;
-box-shadow:var(--shadow);
-transition:border-color .3s;
-}
-.section-card:hover{border-color:rgba(200,169,110,.25)}
-.section-card::before{
-content:'';position:absolute;top:0;left:0;right:0;height:2px;
-background:linear-gradient(90deg,transparent,var(--gold),transparent);
-}
-
-.sc-header{
-display:flex;align-items:center;gap:16px;
-margin-bottom:24px;padding-bottom:20px;
-border-bottom:1px solid rgba(255,255,255,.06);
-}
-.sc-icon{
-width:44px;height:44px;border-radius:10px;
-background:var(--gold-dim);border:1px solid var(--border);
-display:flex;align-items:center;justify-content:center;
-font-size:20px;flex-shrink:0;
-}
-.sc-title-wrap{}
-.sc-overline{
-font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;
-color:var(--gold);text-transform:uppercase;margin-bottom:4px;
-}
-.sc-title{
-font-family:'Cormorant Garamond',serif;
-font-size:clamp(20px,3.5vw,26px);font-weight:400;color:var(--white);
-line-height:1.2;
-}
-
-/* ── FORM ELEMENTS ── */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-grid.three{grid-template-columns:1fr 1fr 1fr}
-.form-grid.wide{grid-template-columns:2fr 1fr}
-.form-grid.slim{grid-template-columns:1fr 1fr 1fr 1fr}
-@media(max-width:560px){
-.form-grid,.form-grid.three,.form-grid.wide,.form-grid.slim{grid-template-columns:1fr}
-}
-
-.form-group{margin-bottom:16px}
-.form-group.full{grid-column:1/-1}
-.form-group.span2{grid-column:span 2}
-@media(max-width:560px){.form-group.span2{grid-column:1}}
-
-label{
-display:block;font-size:12px;font-weight:500;
-color:var(--mist2);margin-bottom:7px;letter-spacing:.3px;
-}
-label .req{color:var(--gold);margin-left:2px}
-label .note{
-font-size:11px;color:var(--mist);font-weight:400;
-display:block;margin-top:2px;line-height:1.4;
-}
-
-input[type=text],
-input[type=email],
-input[type=tel],
-input[type=number],
-input[type=date],
-input[type=password],
-select,
-textarea{
-width:100%;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,255,255,.1);
-border-radius:var(--r);
-color:var(--white);
-font-family:'DM Sans',sans-serif;
-font-size:15px;
-padding:13px 15px;
-outline:none;
-transition:border-color .25s,box-shadow .25s,background .25s;
--webkit-appearance:none;appearance:none;
-}
-input:focus,select:focus,textarea:focus{
-border-color:var(--gold);
-box-shadow:0 0 0 3px rgba(200,169,110,.1);
-background:rgba(255,255,255,.06);
-}
-input::placeholder,textarea::placeholder{color:var(--mist)}
-input.error,select.error{border-color:rgba(192,74,43,.6)}
-input:disabled{opacity:.4;cursor:not-allowed}
-
-select{
-cursor:pointer;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237D8A98' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-background-repeat:no-repeat;background-position:right 14px center;
-padding-right:40px;
-}
-select option{background:var(--ink2);color:var(--white)}
-
-/* SSN masked input */
-.ssn-wrap{position:relative}
-.ssn-wrap input{letter-spacing:3px;font-family:'DM Mono',monospace;font-size:14px}
-.ssn-toggle{
-position:absolute;right:12px;top:50%;transform:translateY(-50%);
-background:transparent;border:none;color:var(--mist);cursor:pointer;
-font-size:16px;padding:4px;transition:color .2s;
-}
-.ssn-toggle:hover{color:var(--gold)}
-
-/* Date input */
-input[type=date]::-webkit-calendar-picker-indicator{
-filter:invert(.4) sepia(1) saturate(3) hue-rotate(0deg);
-cursor:pointer;opacity:.6;
-}
-input[type=date]::-webkit-calendar-picker-indicator:hover{opacity:1}
-
-/* ── INFO / WARNING BOXES ── */
-.info-box{
-background:var(--gold-dim);border:1px solid var(--border);
-border-left:3px solid var(--gold);
-border-radius:var(--r);padding:14px 16px;
-margin-bottom:20px;font-size:13px;
-color:var(--mist2);line-height:1.6;
-}
-.info-box strong{color:var(--gold-l)}
-
-.warn-box{
-background:rgba(192,74,43,.08);
-border:1px solid rgba(192,74,43,.2);
-border-left:3px solid var(--red);
-border-radius:var(--r);padding:14px 16px;
-margin-bottom:20px;font-size:13px;
-color:#E0A090;line-height:1.6;
-}
-
-.secure-note{
-display:inline-flex;align-items:center;gap:7px;
-font-size:11px;color:var(--mist);margin-top:6px;
-}
-.secure-note::before{content:'🔐';font-size:12px}
-
-/* ── DIVIDER ── */
-.divider{
-height:1px;
-background:linear-gradient(90deg,transparent,rgba(200,169,110,.15),transparent);
-margin:24px 0;
-}
-
-/* ── ADDRESS FIELDS ── */
-.address-autocomplete{
-position:relative;
-}
-.addr-hint{
-font-size:11px;color:var(--mist);margin-top:5px;
-display:flex;align-items:center;gap:5px;
-}
-.addr-hint::before{content:'📍';font-size:11px}
-
-/* ── BANK SECTION ── */
-.bank-block{
-background:rgba(255,255,255,.02);
-border:1px solid rgba(255,255,255,.07);
-border-radius:12px;padding:22px 20px;
-margin-bottom:16px;position:relative;
-}
-.bank-block::before{
-content:'';position:absolute;top:0;left:0;right:0;height:2px;
-border-radius:12px 12px 0 0;
-background:linear-gradient(90deg,var(--gold),transparent);
-opacity:.4;
-}
-.bank-label{
-font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
-color:var(--gold);text-transform:uppercase;margin-bottom:18px;
-display:flex;align-items:center;gap:8px;
-}
-.bank-label::after{content:'';flex:1;height:1px;background:rgba(200,169,110,.15)}
-
-.bank-number-wrap{
-display:flex;align-items:center;gap:10px;
-}
-.bank-number-wrap input{font-family:'DM Mono',monospace;font-size:14px;letter-spacing:1px}
-.bank-eye{
-width:44px;height:44px;border-radius:var(--r);
-background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-display:flex;align-items:center;justify-content:center;
-font-size:18px;cursor:pointer;flex-shrink:0;
-transition:all .2s;color:var(--mist);
-}
-.bank-eye:hover{border-color:var(--gold);color:var(--gold)}
-
-/* Account type radio */
-.account-type-row{
-display:flex;gap:10px;flex-wrap:wrap;
-}
-.acct-option{
-flex:1;min-width:120px;
-display:flex;align-items:center;gap:10px;
-padding:12px 16px;
-border:1px solid rgba(255,255,255,.09);
-border-radius:var(--r);cursor:pointer;
-transition:all .2s;background:rgba(255,255,255,.02);
-}
-.acct-option:hover{border-color:rgba(200,169,110,.3);background:var(--gold-dim)}
-.acct-option input[type=radio]{
-accent-color:var(--gold);cursor:pointer;
-width:16px;height:16px;flex-shrink:0;
-}
-.acct-option-label{font-size:13px;color:var(--mist2);font-weight:500}
-.acct-option input:checked ~ .acct-option-label{color:var(--gold)}
-
-/* ── VOID CHECK UPLOAD ── */
-.void-upload{
-border:1.5px dashed rgba(200,169,110,.3);
-border-radius:var(--r);padding:24px 16px;
-text-align:center;cursor:pointer;
-background:var(--gold-dim);position:relative;
-transition:all .25s;
-}
-.void-upload:hover{border-color:var(--gold);background:rgba(200,169,110,.1)}
-.void-upload input[type=file]{
-position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
-}
-.vu-icon{font-size:28px;margin-bottom:8px}
-.vu-text{font-size:13px;color:var(--mist2);font-weight:500;margin-bottom:3px}
-.vu-sub{font-size:11px;color:var(--mist)}
-.vu-badge{
-display:inline-block;margin-top:10px;
-font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
-color:var(--gold);border:1px solid rgba(200,169,110,.3);
-padding:5px 14px;border-radius:100px;
-}
-.file-attached{
-display:none;margin-top:12px;padding:10px 14px;
-background:rgba(46,139,87,.1);border:1px solid rgba(46,139,87,.25);
-border-radius:7px;align-items:center;gap:10px;
-animation:slideIn .3s ease;
-}
-.file-attached.show{display:flex}
-@keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.fa-icon{font-size:18px;flex-shrink:0}
-.fa-name{font-size:12px;font-weight:500;color:var(--white)}
-.fa-size{font-size:11px;color:var(--mist)}
-.fa-remove{
-margin-left:auto;background:transparent;border:none;
-color:var(--mist);cursor:pointer;font-size:14px;
-width:26px;height:26px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-transition:all .2s;
-}
-.fa-remove:hover{background:rgba(192,74,43,.2);color:var(--red)}
-
-/* Add bank button */
-.btn-add-bank{
-display:flex;align-items:center;gap:8px;
-background:transparent;border:1px dashed rgba(200,169,110,.3);
-border-radius:var(--r);padding:12px 18px;
-color:var(--gold);font-family:'DM Sans',sans-serif;
-font-size:13px;font-weight:500;cursor:pointer;
-transition:all .25s;width:100%;margin-bottom:20px;
-}
-.btn-add-bank:hover{border-color:var(--gold);background:var(--gold-dim)}
-.btn-add-bank .plus{font-size:18px;line-height:1}
-
-/* ── FUNDING ROLLUP ── */
-.funding-select-wrap{
-display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-}
-.funding-info-btn{
-width:26px;height:26px;border-radius:50%;
-background:rgba(200,169,110,.12);border:1px solid rgba(200,169,110,.25);
-display:inline-flex;align-items:center;justify-content:center;
-font-size:12px;color:var(--gold);cursor:pointer;flex-shrink:0;
-transition:all .2s;font-family:'DM Mono',monospace;font-weight:500;
-}
-.funding-info-btn:hover{background:rgba(200,169,110,.2)}
-.funding-tooltip{
-display:none;margin-top:8px;padding:12px 14px;
-background:var(--panel3);border:1px solid var(--border);
-border-radius:var(--r);font-size:12px;color:var(--mist2);line-height:1.6;
-}
-.funding-tooltip.show{display:block;animation:slideIn .2s ease}
-
-/* ── CONSENT ── */
-.consent-row{
-display:flex;align-items:flex-start;gap:14px;
-padding:16px;background:rgba(255,255,255,.02);
-border:1px solid rgba(255,255,255,.07);border-radius:var(--r);
-cursor:pointer;transition:border-color .2s;
-}
-.consent-row:hover{border-color:rgba(200,169,110,.25)}
-.consent-row input[type=checkbox]{
-flex-shrink:0;margin-top:2px;
-accent-color:var(--gold);cursor:pointer;
-width:17px;height:17px;
-}
-.consent-text{font-size:13px;color:var(--mist2);line-height:1.6}
-.consent-text strong{color:var(--white)}
-
-/* ── SUBMIT ── */
-.submit-area{
-margin-top:28px;display:flex;flex-direction:column;gap:14px;align-items:center;
-}
-.btn-submit{
-width:100%;padding:18px 24px;
-background:var(--gold);color:var(--ink);
-border:none;border-radius:var(--r);
-font-family:'DM Mono',monospace;font-size:13px;
-font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
-cursor:pointer;position:relative;overflow:hidden;
-transition:all .3s;
-}
-.btn-submit::before{
-content:'';position:absolute;inset:0;
-background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 60%);
-pointer-events:none;
-}
-.btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(200,169,110,.35)}
-.btn-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
-.submit-note{font-size:11px;color:var(--mist);text-align:center;line-height:1.6}
-
-/* ── PROGRESS BAR ── */
-.top-progress{
-position:fixed;top:0;left:0;height:3px;
-background:linear-gradient(90deg,var(--gold),var(--gold-l));
-transition:width .5s ease;z-index:999;
-width:0%;
-}
-
-/* ── ERROR TEXT ── */
-.err-text{
-font-size:11px;color:#E08070;
-margin-top:5px;display:none;
-}
-
-/* ── SUCCESS STATE ── */
-.success-overlay{
-display:none;text-align:center;
-padding:52px 32px;
-}
-.success-overlay.show{display:block;animation:slideIn .5s ease}
-.success-icon{font-size:60px;display:block;margin-bottom:20px}
-.success-title{
-font-family:'Cormorant Garamond',serif;
-font-size:38px;font-weight:300;color:var(--white);
-margin-bottom:10px;
-}
-.success-title em{color:var(--gold);font-style:italic}
-.success-sub{font-size:15px;color:var(--mist2);line-height:1.7;max-width:420px;margin:0 auto 28px}
-.success-ref{
-font-family:'DM Mono',monospace;font-size:12px;
-color:var(--gold);letter-spacing:2px;
-padding:10px 20px;border:1px solid var(--border);
-border-radius:100px;display:inline-block;margin-bottom:28px;
-}
-.next-steps{
-text-align:left;background:var(--gold-dim);
-border:1px solid var(--border);border-radius:12px;padding:22px;
-}
-.next-steps h3{
-font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
-color:var(--gold);text-transform:uppercase;margin-bottom:14px;
-}
-.ns-item{
-display:flex;align-items:flex-start;gap:12px;
-font-size:13px;color:var(--mist2);margin-bottom:10px;line-height:1.6;
-}
-.ns-item:last-child{margin-bottom:0}
-.ns-num{
-width:22px;height:22px;border-radius:50%;background:rgba(200,169,110,.15);
-border:1px solid rgba(200,169,110,.3);color:var(--gold);
-font-family:'DM Mono',monospace;font-size:10px;
-display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
-}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(20px)}
-to{opacity:1;transform:translateY(0)}
-}
-.section-card{animation:fadeUp .5s ease both}
-.section-card:nth-child(2){animation-delay:.1s}
-.section-card:nth-child(3){animation-delay:.2s}
-
-/* ── FOOTER ── */
-footer{
-margin-top:48px;padding:24px 0;
-border-top:1px solid rgba(255,255,255,.06);
-text-align:center;
-}
-footer p{font-size:11px;color:var(--mist);line-height:1.8}
-footer a{color:var(--gold);text-decoration:none}
-
-/* ── MOBILE ── */
-@media(max-width:480px){
-.section-card{padding:24px 18px}
-.account-type-row{flex-direction:column}
-.acct-option{min-width:unset}
-}
+--ink:#0A0C10;--ink2:#12151C;--panel:#13161E;--p2:#1A1F2A;--p3:#0E1016;
+--gold:#C8A96E;--gold2:#E8D4A0;--gdim:rgba(200,169,110,.10);
+--white:#FFFFFF;--mist:#8A95A3;--mist2:#B8C2CE;
+--red:#C04A2B;--border:rgba(200,169,110,.18);
+--nav-h:50px;--bot-h:56px;
+}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.025'/%3E%3C/svg%3E")}
+.prog{position:fixed;top:0;left:0;height:3px;z-index:200;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .5s cubic-bezier(.4,0,.2,1)}
+.tnav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;background:var(--ink);border-bottom:1px solid rgba(200,169,110,.12)}
+.tnav-brand{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:3px;color:var(--gold);text-transform:uppercase}
+.tnav-dots{display:flex;gap:5px}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.15);border:none;cursor:pointer;transition:all .3s}
+.dot.on{background:var(--gold);transform:scale(1.5)}
+.tnav-counter{font-family:'DM Mono',monospace;font-size:11px;color:var(--mist)}
+.bnav{position:fixed;bottom:0;left:0;right:0;height:var(--bot-h);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;background:var(--ink);border-top:1px solid rgba(200,169,110,.12)}
+.bnav-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--mist);text-transform:uppercase;flex:1;text-align:center}
+.btn{display:flex;align-items:center;gap:6px;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:8px 18px;color:var(--mist);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{border-color:var(--gold);color:var(--gold)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.btn.pri{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:600}
+.btn.pri:hover{background:var(--gold2);border-color:var(--gold2)}
+.sarea{position:fixed;top:var(--nav-h);bottom:var(--bot-h);left:0;right:0;overflow:hidden}
+.slide{position:absolute;inset:0;padding:20px 28px;opacity:0;pointer-events:none;transform:translateX(36px);transition:opacity .4s ease,transform .4s ease;overflow:hidden}
+.slide.on{opacity:1;pointer-events:all;transform:translateX(0)}
+.slide.out{opacity:0;transform:translateX(-36px)}
+.row{display:flex;gap:16px;height:100%}
+.col{display:flex;flex-direction:column;gap:11px;flex:1;min-width:0;overflow:hidden}
+.col-40{flex:0 0 40%}.col-45{flex:0 0 45%}.col-50{flex:0 0 50%}.col-55{flex:0 0 55%}
+.tag{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:5px}
+.h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,50px);font-weight:400;line-height:1.05;color:var(--white)}
+.h1 em{color:var(--gold);font-style:italic}
+.h2{font-family:'Playfair Display',serif;font-size:clamp(19px,2.6vw,32px);font-weight:400;line-height:1.1;color:var(--white)}
+.h2 em{color:var(--gold);font-style:italic}
+.body{font-size:12.5px;color:var(--mist2);line-height:1.6}
+.body-sm{font-size:11.5px;color:var(--mist);line-height:1.55}
+.gold-rule{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:6px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:13px 15px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.card-gl{border-left:2px solid var(--gold);border-radius:0 8px 8px 0;padding:11px 13px;background:var(--p2)}
+.card-gold{background:var(--gdim);border:1px solid rgba(200,169,110,.3);border-radius:10px;padding:13px 15px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 9px;text-align:center;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold)}
+.stat-n{font-family:'Playfair Display',serif;font-size:clamp(22px,3.2vw,36px);font-weight:600;color:var(--gold);line-height:1;margin-bottom:3px}
+.stat-l{font-size:10.5px;color:var(--mist2);margin-bottom:2px}
+.stat-s{font-size:9.5px;color:var(--gold);font-style:italic}
+.pbox{border-radius:10px;padding:12px 15px;border:1px solid}
+.pbox.red{background:rgba(192,74,43,.08);border-color:rgba(192,74,43,.3)}
+.pbox.grn{background:rgba(200,169,110,.07);border-color:rgba(200,169,110,.35)}
+.plabel{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--mist);text-transform:uppercase;margin-bottom:4px}
+.prate{font-family:'Playfair Display',serif;font-size:clamp(16px,2.2vw,26px);font-weight:600;margin-bottom:2px}
+.pbox.red .prate{color:var(--red)}.pbox.grn .prate{color:var(--gold)}
+.pnote{font-size:11px;color:var(--mist)}
+.fi{display:flex;gap:11px;padding:10px 12px;background:var(--p2);border-radius:8px;border-left:2px solid var(--gold)}
+.fi-icon{font-size:17px;flex-shrink:0;margin-top:1px}
+.fi h4{font-size:12px;font-weight:600;color:var(--white);margin-bottom:2px}
+.fi p{font-size:11px;color:var(--mist);line-height:1.5}
+.dcard{display:flex;gap:12px;padding:13px 15px;background:var(--panel);border:1px solid var(--border);border-radius:10px;position:relative;overflow:hidden}
+.dcard::before{content:'';position:absolute;top:0;left:0;bottom:0;width:2px;background:var(--gold)}
+.dic{font-size:22px;flex-shrink:0;margin-top:2px}
+.dcard h3{font-size:13px;font-weight:600;color:var(--white);margin-bottom:2px}
+.dbadge{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:3px}
+.dcard p{font-size:11px;color:var(--mist);line-height:1.5}
+.dprice{margin-top:4px;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--gold)}
+.stbl{border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.sth{display:grid;grid-template-columns:1fr 1fr 1fr 1.2fr;background:var(--p2);padding:7px 12px}
+.sth span{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;text-align:center}
+.str{display:grid;grid-template-columns:1fr 1fr 1fr 1.2fr;padding:7px 12px}
+.str:nth-child(odd){background:var(--panel)}.str:nth-child(even){background:var(--p3)}
+.str span{font-size:11.5px;text-align:center;color:var(--mist)}
+.str span:first-child{color:var(--white);font-weight:600}
+.str span:last-child{color:var(--gold);font-weight:700}
+.str.hl{background:rgba(200,169,110,.1)!important}.str.hl span{color:var(--gold2)!important}
+.ctbl{background:var(--p2);border-radius:9px;overflow:hidden;border:1px solid var(--border)}
+.cr{display:flex;justify-content:space-between;align-items:center;padding:8px 13px}
+.cr+.cr{border-top:1px solid rgba(255,255,255,.05)}
+.cr .cl{font-size:11.5px;color:var(--mist)}.cr .cv{font-size:11.5px;font-weight:600;color:var(--white);font-family:'DM Mono',monospace}
+.cr.tot{background:rgba(200,169,110,.07)}.cr.tot .cl{color:var(--gold);font-weight:600}.cr.tot .cv{color:var(--gold);font-size:12.5px}
+.cdiv{height:1px;background:rgba(200,169,110,.2)}
+.tl{display:flex;flex-direction:column;gap:10px}
+.ti{display:flex;gap:11px}
+.tdot{width:28px;height:28px;border-radius:50%;background:var(--p2);border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace;font-size:8.5px;color:var(--gold);margin-top:2px}
+.tbody h4{font-size:12.5px;font-weight:600;color:var(--white);margin-bottom:1px}
+.tday{font-size:9px;color:var(--gold);font-family:'DM Mono',monospace;margin-bottom:2px}
+.tbody p{font-size:11px;color:var(--mist)}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.pi{background:var(--p2);border-radius:8px;padding:10px 12px;border-left:2px solid var(--gold)}
+.pi .pil{font-size:10px;color:var(--mist);margin-bottom:2px}
+.pi .piv{font-size:12.5px;font-weight:600;color:var(--white)}
+.pi .pis{font-size:9.5px;color:var(--gold);margin-top:1px}
+.wcard{display:flex;gap:10px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 13px}
+.wnum{width:22px;height:22px;border-radius:50%;background:rgba(200,169,110,.12);border:1px solid rgba(200,169,110,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono',monospace;font-size:8.5px;color:var(--gold)}
+.wcard h4{font-size:12px;font-weight:600;color:var(--white);margin-bottom:2px}
+.wcard p{font-size:11px;color:var(--mist);line-height:1.5}
+.calc{background:var(--p2);border-radius:12px;padding:16px;border:1px solid var(--border)}
+.cslider{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;outline:none;cursor:pointer;background:rgba(255,255,255,.1);margin:7px 0}
+.cslider::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--ink)}
+.cval{font-family:'Playfair Display',serif;font-size:clamp(24px,3.2vw,40px);font-weight:600;color:var(--gold);text-align:center;margin:5px 0}
+.cresults{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:7px}
+.cbox{background:var(--panel);border-radius:8px;padding:10px;border:1px solid var(--border);text-align:center}
+.cbox.hi{border-color:rgba(200,169,110,.35);background:rgba(200,169,110,.07)}
+.crv{font-family:'DM Mono',monospace;font-size:clamp(12px,1.6vw,17px);font-weight:500;color:var(--gold)}
+.crl{font-size:9.5px;color:var(--mist);margin-top:2px}
+.cta-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:14px;text-align:center;padding:8px 16px}
+.cta-h{font-family:'Playfair Display',serif;font-size:clamp(26px,4.2vw,50px);font-weight:400;line-height:1.05;color:var(--white)}
+.cta-h em{color:var(--gold);font-style:italic}
+.cta-steps{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.cstep{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;min-width:150px;text-align:center}
+.cstep .csn{font-family:'Playfair Display',serif;font-size:24px;color:var(--gold);margin-bottom:3px}
+.cstep .csl{font-size:12px;font-weight:600;color:var(--white);margin-bottom:2px}
+.cstep .css_{font-size:10.5px;color:var(--mist)}
+.ccontact{background:var(--p2);border:1px solid var(--border);border-radius:12px;padding:16px 32px}
+.ccn{font-family:'Playfair Display',serif;font-size:22px;color:var(--white);margin-bottom:2px}
+.cct{font-size:11px;color:var(--mist);margin-bottom:8px}
+.cce{font-size:13.5px;color:var(--gold);font-weight:600;margin-bottom:2px}
+.ccp{font-size:16px;color:var(--gold);font-weight:700;font-family:'DM Mono',monospace}
+.grw{width:44px;height:1px;background:var(--gold);margin:6px auto;opacity:.5}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide.on>.row,.slide.on>.cta-wrap{animation:fu .45s ease both}
 </style>
 </head>
 <body>
+<div class="prog" id="prog"></div>
+<nav class="tnav">
+<span class="tnav-brand">Enterprise Payments Advisory · Mobile &amp; Events</span>
+<div class="tnav-dots" id="dots"></div>
+<span class="tnav-counter" id="ctr">1 / 13</span>
+</nav>
+<div class="sarea" id="sarea">
 
-<div class="top-progress" id="top-progress"></div>
-<div class="glow"></div>
-
-<div class="page">
-
-<!-- HEADER -->
-<header>
-<div class="brand-strip">
-<span class="brand-logo">CardConnect Services</span>
-<span class="brand-sep"></span>
-<span class="brand-sub">Merchant Application</span>
+<!-- 01 COVER -->
+<div class="slide on" id="s0">
+<div class="row">
+<div class="col col-45" style="justify-content:center;gap:12px">
+<div class="tag">Enterprise Payments Advisory · Confidential 2026</div>
+<div class="h1">One Account.<br>Every Channel.<br><em>Next Morning.</em></div>
+<div class="gold-rule"></div>
+<p class="body">You currently collect payments through Cash App and PayPal — consumer apps with no business tools, 1–3 day fund holds, and high flat rates. We replace both with a single Fiserv merchant account at a lower rate with next-day settlement.</p>
+<div class="stats">
+<div class="stat"><div class="stat-n">$0</div><div class="stat-l">Upfront cost</div><div class="stat-s">No purchase required</div></div>
+<div class="stat"><div class="stat-n">1</div><div class="stat-l">Bank account for everything</div><div class="stat-s">Cash App + PayPal unified</div></div>
+<div class="stat"><div class="stat-n">Next</div><div class="stat-l">Day settlement</div><div class="stat-s">Weekends included</div></div>
 </div>
-<h1>Ownership &amp; <em>Banking</em><br>Information</h1>
-<div class="rule"></div>
-<p class="sub-headline">
-Please complete all fields accurately. This information is used to verify ownership and set up your merchant account funding.
-</p>
-
-<!-- Progress pills -->
-<div class="progress-strip">
-<div class="ps-item done"><span class="ps-dot"></span>Business Info</div>
-<div class="ps-item active"><span class="ps-dot"></span>Ownership</div>
-<div class="ps-item"><span class="ps-dot"></span>Banking</div>
-<div class="ps-item"><span class="ps-dot"></span>Review</div>
 </div>
-</header>
-
-<!-- FORM -->
-<form id="main-form" novalidate>
-<!-- Hidden Web3Forms key — replace with yours from web3forms.com -->
-<input type="hidden" name="access_key" value="51b07f6b-5305-45c2-b9fb-e7e73114f378">
-<input type="hidden" name="subject" value="Merchant Application — Ownership & Banking">
-<input type="hidden" name="from_name" value="CardConnect Merchant Portal">
-<input type="hidden" name="redirect" value="false">
-
-<!-- ═══════════════════════════════════════
-SECTION 1: OWNERSHIP INFORMATION
-═══════════════════════════════════════ -->
-<div class="section-card">
-<div class="sc-header">
-<div class="sc-icon">👤</div>
-<div class="sc-title-wrap">
-<div class="sc-overline">Section 01</div>
-<div class="sc-title">Ownership Information</div>
+<div class="col" style="justify-content:center;gap:11px">
+<div class="card"><div class="tag">Powered by Fiserv / First Data</div><p class="body">The same processing infrastructure used by the largest banks and retailers in North America — now accessible for mobile delivery and event operators. PCI-DSS Level 1. Apple Pay, Google Pay, tap, chip, and swipe on every device.</p></div>
+<div class="pbox red"><div class="plabel">Today — Cash App &amp; PayPal Only</div><div class="prate">2.60% + $0.10 / txn</div><div class="pnote">1–3 day hold · No card acceptance · No business tools</div></div>
+<div class="pbox grn"><div class="plabel">Tomorrow — Unified Merchant Account</div><div class="prate">IC + 1.35% + $0.05 / txn</div><div class="pnote">1 account · 1 deposit · next-day settlement · full reporting</div></div>
+</div>
 </div>
 </div>
 
-<div class="info-box">
-<strong>Note:</strong> The Owner Legal Name entered below will be the name used to sign the merchant application. Please enter your full legal name exactly as it appears on your government-issued ID.
+<!-- 02 THE PROBLEM -->
+<div class="slide" id="s1">
+<div class="row">
+<div class="col col-50" style="justify-content:center;gap:11px">
+<div class="tag">The Problem</div>
+<div class="h2">Cash App and PayPal are <em>consumer apps.</em></div>
+<div class="gold-rule"></div>
+<p class="body">They were not designed for a business with five delivery drivers and live event sales. Every transaction is expensive, every deposit is delayed, and you have no business dashboard.</p>
+<div class="card-gl"><div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px">Three Problems. One Solution.</div><p class="body-sm">① Your rate is 2.60%–2.99% — flat, regardless of card type.<br>② Funds take 1–3 business days to reach your bank.<br>③ You cannot accept chip cards, tap-to-pay, or Apple Pay today.</p></div>
 </div>
-
-<!-- Full legal name -->
-<div class="form-group">
-<label for="owner_name">
-Owner Legal Name <span class="req">*</span>
-<span class="note">This will be the name the owner uses to sign the application</span>
-</label>
-<input type="text" id="owner_name" name="owner_name"
-placeholder="Full legal name (e.g. Richard James Wills)"
-autocomplete="name" required>
-<div class="err-text" id="err-owner_name">Please enter the owner's full legal name.</div>
+<div class="col" style="justify-content:center;gap:10px">
+<div class="fi"><div class="fi-icon">💸</div><div><h4>High Flat Rate — No Volume Discount</h4><p>Cash App charges 2.6%+$0.10 on every transaction. PayPal charges 2.99%. No negotiation. No improvement over time.</p></div></div>
+<div class="fi"><div class="fi-icon">⏳</div><div><h4>1–3 Day Hold on Your Money</h4><p>After a busy festival day, your revenue sits in a consumer wallet for up to three business days. Weekend sales don't deposit until Tuesday.</p></div></div>
+<div class="fi"><div class="fi-icon">🚫</div><div><h4>No Physical Card Acceptance</h4><p>Customers without Cash App or PayPal cannot pay you. Chip cards, tap-to-pay, and Apple Pay are all blocked — lost sales every day.</p></div></div>
+<div class="fi"><div class="fi-icon">📊</div><div><h4>No Business Reporting</h4><p>No per-driver breakdown. No event vs delivery comparison. No unified tax statement. Month-end means exporting from two consumer apps manually.</p></div></div>
 </div>
-
-<!-- Title + Ownership % -->
-<div class="form-grid">
-<div class="form-group">
-<label for="title">Title <span class="req">*</span></label>
-<select id="title" name="title" required>
-<option value="" disabled selected>Select title</option>
-<option>Owner</option>
-<option>President</option>
-<option>CEO</option>
-<option>CFO</option>
-<option>COO</option>
-<option>Managing Member</option>
-<option>Partner</option>
-<option>Vice President</option>
-<option>Other</option>
-</select>
-<div class="err-text" id="err-title">Please select a title.</div>
-</div>
-<div class="form-group">
-<label for="ownership_pct">Ownership Percentage <span class="req">*</span></label>
-<input type="number" id="ownership_pct" name="ownership_pct"
-placeholder="e.g. 100" min="1" max="100" inputmode="decimal" required>
-<div class="err-text" id="err-ownership_pct">Please enter ownership percentage (1–100).</div>
 </div>
 </div>
 
-<div class="divider"></div>
-
-<!-- SSN -->
-<div class="form-group">
-<label for="ssn">Social Security Number (SSN) <span class="req">*</span></label>
-<div class="ssn-wrap">
-<input type="password" id="ssn" name="ssn"
-placeholder="XXX-XX-XXXX" maxlength="11"
-autocomplete="off" inputmode="numeric" required>
-<button type="button" class="ssn-toggle" id="ssn-toggle" aria-label="Toggle SSN visibility">👁</button>
+<!-- 03 THE SOLUTION -->
+<div class="slide" id="s2">
+<div class="row">
+<div class="col col-50" style="justify-content:center;gap:11px">
+<div class="tag">The Solution</div>
+<div class="h2">One Clover account.<br><em>Everything flows in.</em></div>
+<div class="gold-rule"></div>
+<p class="body">A single Fiserv merchant account replaces both Cash App and PayPal. Every channel — drivers, festival kiosk, QR payments — settles to one bank account every morning.</p>
+<div class="card-gold"><div class="tag">Your New Rate</div><div style="font-family:'Playfair Display',serif;font-size:clamp(20px,2.8vw,32px);color:var(--gold);margin-bottom:3px">IC + 1.35% + $0.05</div><p class="body-sm">Effective ~2.51% — lower than Cash App. Fixed markup above interchange. Every card type priced at its true cost.</p></div>
 </div>
-<span class="secure-note">Transmitted via 256-bit encryption. Never stored in plaintext.</span>
-<div class="err-text" id="err-ssn">Please enter a valid SSN (format: XXX-XX-XXXX).</div>
+<div class="col" style="justify-content:center;gap:10px">
+<div class="fi"><div class="fi-icon">📲</div><div><h4>Cash App → Clover QR Code</h4><p>Customers scan a Clover QR instead. Same experience. Money deposits to your business account next morning — not a consumer wallet.</p></div></div>
+<div class="fi"><div class="fi-icon">💳</div><div><h4>PayPal → Clover Checkout</h4><p>Rate drops from 2.99% to IC+1.35%. PayPal's rolling fund hold eliminated. Next-day settlement every day.</p></div></div>
+<div class="fi"><div class="fi-icon">🚗</div><div><h4>All 5 Delivery Drivers</h4><p>Drivers use existing phones. Free Clover app + $49 Go reader, or Tap to Pay on iPhone at no hardware cost. All sales to one dashboard.</p></div></div>
+<div class="fi"><div class="fi-icon">🎪</div><div><h4>Festival &amp; Event Sales</h4><p>Clover Kiosk at your booth. Customers self-order and pay. All event revenue feeds the same account. One statement. One tax report.</p></div></div>
 </div>
-
-<!-- DOB + Phone -->
-<div class="form-grid">
-<div class="form-group">
-<label for="dob">Date of Birth <span class="req">*</span></label>
-<input type="date" id="dob" name="dob" required max="2006-01-01">
-<div class="err-text" id="err-dob">Please enter a valid date of birth.</div>
-</div>
-<div class="form-group">
-<label for="phone">Phone Number <span class="req">*</span></label>
-<input type="tel" id="phone" name="phone"
-placeholder="(301) 881-1115"
-autocomplete="tel" inputmode="tel" required>
-<div class="err-text" id="err-phone">Please enter a valid phone number.</div>
 </div>
 </div>
 
-<!-- Mobile + Email -->
-<div class="form-grid">
-<div class="form-group">
-<label for="mobile">Mobile Phone Number</label>
-<input type="tel" id="mobile" name="mobile"
-placeholder="(___) ___-____"
-autocomplete="tel" inputmode="tel">
+<!-- 04 SAVINGS TABLE -->
+<div class="slide" id="s3">
+<div class="row">
+<div class="col col-55" style="justify-content:center;gap:11px">
+<div class="tag">Rate Savings</div>
+<div class="h2">What you keep vs <em>Cash App &amp; PayPal.</em></div>
+<div class="gold-rule"></div>
+<p class="body-sm" style="margin-bottom:6px">Processing rate savings at every volume level. Device rental is shown separately on the next slide.</p>
+<div class="stbl">
+<div class="sth"><span>Monthly</span><span>Cash App</span><span>Ours</span><span>Annual Savings</span></div>
+<div class="str"><span>$10K</span><span>$293</span><span>$268</span><span>$300/yr</span></div>
+<div class="str"><span>$25K</span><span>$733</span><span>$669</span><span>$768/yr</span></div>
+<div class="str hl"><span>$50K</span><span>$1,467</span><span>$1,338</span><span>$1,548/yr</span></div>
+<div class="str"><span>$75K</span><span>$2,200</span><span>$2,007</span><span>$2,316/yr</span></div>
+<div class="str"><span>$100K</span><span>$2,933</span><span>$2,677</span><span>$3,072/yr</span></div>
+<div class="str"><span>$150K</span><span>$4,400</span><span>$4,015</span><span>$4,620/yr</span></div>
 </div>
-<div class="form-group">
-<label for="email">Email Address <span class="req">*</span></label>
-<input type="email" id="email" name="email"
-placeholder="rwillis.2020flooring@gmail.com"
-autocomplete="email" required>
-<div class="err-text" id="err-email">Please enter a valid email address.</div>
+<p class="body-sm">*Cash App 2.6%+$0.10/txn vs IC+1.35%+$0.05/txn. Avg $30 ticket assumed.</p>
 </div>
+<div class="col" style="justify-content:center;gap:11px">
+<div class="card"><div class="tag">Full Monthly Cost — $50K Example</div>
+<div class="ctbl">
+<div class="cr"><span class="cl">Processing (IC+1.35%+$0.05)</span><span class="cv">$1,338</span></div>
+<div class="cr"><span class="cl">Software — Counter Service</span><span class="cv">$60</span></div>
+<div class="cr"><span class="cl">Optional: Kiosk rental</span><span class="cv" style="color:var(--mist)">$65</span></div>
+<div class="cr"><span class="cl">Optional: Mini rental</span><span class="cv" style="color:var(--mist)">$35</span></div>
+<div class="cdiv"></div>
+<div class="cr tot"><span class="cl">Total with rentals</span><span class="cv">$1,498/mo</span></div>
+<div class="cr"><span class="cl">vs Cash App today</span><span class="cv" style="color:var(--mist)">$1,467/mo</span></div>
+<div class="cr"><span class="cl">Difference — with 6 channels</span><span class="cv">+$31/mo</span></div>
 </div>
-
-<div class="divider"></div>
-
-<!-- Driver's License -->
-<div class="form-grid">
-<div class="form-group">
-<label for="dl_number">Driver's License Number <span class="req">*</span></label>
-<input type="text" id="dl_number" name="dl_number"
-placeholder="License number"
-autocomplete="off" required>
-<div class="err-text" id="err-dl_number">Please enter your driver's license number.</div>
-</div>
-<div class="form-group">
-<label for="dl_state">Driver's License State <span class="req">*</span></label>
-<select id="dl_state" name="dl_state" required>
-<option value="" disabled selected>Select state</option>
-<option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
-<option>CA</option><option>CO</option><option>CT</option><option>DE</option>
-<option>FL</option><option>GA</option><option>HI</option><option>ID</option>
-<option>IL</option><option>IN</option><option>IA</option><option>KS</option>
-<option>KY</option><option>LA</option><option>ME</option><option>MD</option>
-<option>MA</option><option>MI</option><option>MN</option><option>MS</option>
-<option>MO</option><option>MT</option><option>NE</option><option>NV</option>
-<option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
-<option>NC</option><option>ND</option><option>OH</option><option>OK</option>
-<option>OR</option><option>PA</option><option>RI</option><option>SC</option>
-<option>SD</option><option>TN</option><option>TX</option><option>UT</option>
-<option>VT</option><option>VA</option><option>WA</option><option>WV</option>
-<option>WI</option><option>WY</option><option>DC</option>
-</select>
-<div class="err-text" id="err-dl_state">Please select your license state.</div>
-</div>
-</div>
-
-<div class="divider"></div>
-
-<!-- Residence Address -->
-<div class="sc-overline" style="margin-bottom:14px">Residence Address</div>
-
-<div class="form-group">
-<label for="address1">Street Address <span class="req">*</span></label>
-<input type="text" id="address1" name="address1"
-placeholder="Start typing your address..."
-autocomplete="street-address" required>
-<div class="addr-hint">Enter your full street address including house/unit number</div>
-<div class="err-text" id="err-address1">Please enter your street address.</div>
-</div>
-
-<div class="form-group">
-<label for="address2">Address Line 2 <span style="color:var(--mist);font-weight:400;font-size:11px">(Suite, Unit, Apt — optional)</span></label>
-<input type="text" id="address2" name="address2"
-placeholder="Suite, unit, apartment number..."
-autocomplete="address-line2">
-</div>
-
-<div class="form-grid three">
-<div class="form-group">
-<label for="city">City <span class="req">*</span></label>
-<input type="text" id="city" name="city"
-placeholder="City" autocomplete="address-level2" required>
-<div class="err-text" id="err-city">Required.</div>
-</div>
-<div class="form-group">
-<label for="state">State <span class="req">*</span></label>
-<select id="state" name="state" required>
-<option value="" disabled selected>State</option>
-<option>AL</option><option>AK</option><option>AZ</option><option>AR</option>
-<option>CA</option><option>CO</option><option>CT</option><option>DE</option>
-<option>FL</option><option>GA</option><option>HI</option><option>ID</option>
-<option>IL</option><option>IN</option><option>IA</option><option>KS</option>
-<option>KY</option><option>LA</option><option>ME</option><option>MD</option>
-<option>MA</option><option>MI</option><option>MN</option><option>MS</option>
-<option>MO</option><option>MT</option><option>NE</option><option>NV</option>
-<option>NH</option><option>NJ</option><option>NM</option><option>NY</option>
-<option>NC</option><option>ND</option><option>OH</option><option>OK</option>
-<option>OR</option><option>PA</option><option>RI</option><option>SC</option>
-<option>SD</option><option>TN</option><option>TX</option><option>UT</option>
-<option>VT</option><option>VA</option><option>WA</option><option>WV</option>
-<option>WI</option><option>WY</option><option>DC</option>
-</select>
-<div class="err-text" id="err-state">Required.</div>
-</div>
-<div class="form-group">
-<label for="zip">ZIP Code <span class="req">*</span></label>
-<input type="text" id="zip" name="zip"
-placeholder="12345" maxlength="10"
-inputmode="numeric" autocomplete="postal-code" required>
-<div class="err-text" id="err-zip">Required.</div>
-</div>
-</div>
-
-<div class="form-group">
-<label for="country">Country</label>
-<select id="country" name="country">
-<option value="US" selected>United States of America</option>
-<option value="CA">Canada</option>
-<option value="MX">Mexico</option>
-<option value="OTHER">Other</option>
-</select>
-</div>
-
-</div><!-- /section-card ownership -->
-
-
-<!-- ═══════════════════════════════════════
-SECTION 2: BANK ACCOUNT & FUNDING
-═══════════════════════════════════════ -->
-<div class="section-card">
-<div class="sc-header">
-<div class="sc-icon">🏦</div>
-<div class="sc-title-wrap">
-<div class="sc-overline">Section 02</div>
-<div class="sc-title">Bank Account &amp; Funding Information</div>
-</div>
-</div>
-
-<div class="info-box">
-<strong>Deposit and Withdrawal Account:</strong> This account will be used for both daily sales deposits and fee withdrawals. You may add additional bank accounts below. Please ensure all numbers match your voided check exactly.
-</div>
-
-<!-- BANK 1 -->
-<div id="banks-container">
-<div class="bank-block" id="bank-1">
-<div class="bank-label">Bank Account 1</div>
-
-<!-- Routing -->
-<div class="form-group">
-<label for="routing_1">Routing Number <span class="req">*</span></label>
-<div class="bank-number-wrap">
-<input type="password" id="routing_1" name="routing_1"
-placeholder="9-digit routing number"
-maxlength="9" inputmode="numeric" autocomplete="off" required>
-<button type="button" class="bank-eye" onclick="toggleBankVis('routing_1', this)" title="Show/Hide">👁</button>
-</div>
-<div class="err-text" id="err-routing_1">Please enter a valid 9-digit routing number.</div>
-</div>
-
-<!-- Account -->
-<div class="form-group">
-<label for="account_1">Account Number <span class="req">*</span></label>
-<div class="bank-number-wrap">
-<input type="password" id="account_1" name="account_1"
-placeholder="Account number"
-maxlength="20" inputmode="numeric" autocomplete="off" required>
-<button type="button" class="bank-eye" onclick="toggleBankVis('account_1', this)" title="Show/Hide">👁</button>
-</div>
-<div class="err-text" id="err-account_1">Please enter your account number.</div>
-</div>
-
-<!-- Confirm account -->
-<div class="form-group">
-<label for="account_1_confirm">Confirm Account Number <span class="req">*</span></label>
-<input type="password" id="account_1_confirm" name="account_1_confirm"
-placeholder="Re-enter account number"
-maxlength="20" inputmode="numeric" autocomplete="off" required>
-<div class="err-text" id="err-account_1_confirm">Account numbers do not match.</div>
-</div>
-
-<!-- Account Type -->
-<div class="form-group">
-<label>Account Type <span class="req">*</span></label>
-<div class="account-type-row">
-<label class="acct-option">
-<input type="radio" name="account_type_1" value="Checking" required>
-<span class="acct-option-label">🏦 Checking</span>
-</label>
-<label class="acct-option">
-<input type="radio" name="account_type_1" value="Savings">
-<span class="acct-option-label">💰 Savings</span>
-</label>
-<label class="acct-option">
-<input type="radio" name="account_type_1" value="Business Checking">
-<span class="acct-option-label">🏢 Business Checking</span>
-</label>
-</div>
-<div class="err-text" id="err-account_type_1">Please select an account type.</div>
-</div>
-
-<!-- Account Usage (read-only, mirrors Clover) -->
-<div class="form-group">
-<label>Account Usage</label>
-<input type="text" value="Deposit and Withdrawal" disabled
-style="opacity:.65;cursor:not-allowed">
-</div>
-
-<!-- Voided Check Upload -->
-<div class="form-group">
-<label>Voided Check or Bank Letter <span class="req">*</span></label>
-<div class="void-upload" id="void-upload-1">
-<input type="file" id="voided_check_1" name="voided_check_1"
-accept=".pdf,.jpg,.jpeg,.png,.heic,.heif"
-onchange="handleVoidCheck(this, 1)">
-<div class="vu-icon">🧾</div>
-<div class="vu-text">Upload Voided Check or Bank Letter</div>
-<div class="vu-sub">PDF, JPG, PNG · Max 10MB · No starter checks</div>
-<div class="vu-badge">Browse / Drop File</div>
-</div>
-<div class="file-attached" id="void-attached-1">
-<span class="fa-icon">📄</span>
-<div>
-<div class="fa-name" id="void-name-1">—</div>
-<div class="fa-size" id="void-size-1">—</div>
-</div>
-<button type="button" class="fa-remove" onclick="removeVoidCheck(1)">✕</button>
-</div>
-<div class="err-text" id="err-voided_check_1">Please attach a voided check or bank letter.</div>
-</div>
-
-</div><!-- /bank-1 -->
-</div><!-- /banks-container -->
-
-<!-- Add another bank -->
-<button type="button" class="btn-add-bank" id="add-bank-btn" onclick="addBank()">
-<span class="plus">+</span>
-Add Another Bank Account
-</button>
-
-<div class="divider"></div>
-
-<!-- FUNDING INFORMATION -->
-<div class="sc-overline" style="margin-bottom:14px">Funding Information</div>
-
-<div class="form-group">
-<label for="funding_rollup">
-Funding Rollup
-<button type="button" class="funding-info-btn" id="funding-info-btn" onclick="toggleFundingInfo()">?</button>
-</label>
-<div class="funding-tooltip" id="funding-tooltip">
-<strong style="color:var(--gold-l)">Separate Fees and Deposits</strong> — Your card processing deposits and monthly fees are handled by separate transactions. This is the standard and recommended setting for most merchants.
-<br><br>
-<strong style="color:var(--gold-l)">Net Deposit</strong> — Processing fees are deducted from your daily deposits before funding. Your account receives the net amount.
-</div>
-<select id="funding_rollup" name="funding_rollup">
-<option value="separate" selected>Separate Fees and Deposits</option>
-<option value="net">Net Deposit</option>
-</select>
-</div>
-
-</div><!-- /section-card banking -->
-
-
-<!-- ═══════════════════════════════════════
-SECTION 3: AUTHORIZATION & CONSENT
-═══════════════════════════════════════ -->
-<div class="section-card">
-<div class="sc-header">
-<div class="sc-icon">✅</div>
-<div class="sc-title-wrap">
-<div class="sc-overline">Section 03</div>
-<div class="sc-title">Authorization &amp; Consent</div>
-</div>
-</div>
-
-<div class="warn-box">
-By submitting this form, you authorize CardConnect / Fiserv to verify your identity, run a background and credit check, and establish a merchant processing account. Please review all information before submitting.
-</div>
-
-<div class="form-group">
-<label class="consent-row" for="consent_verify">
-<input type="checkbox" id="consent_verify" name="consent_verify" required>
-<span class="consent-text">
-I certify that <strong>all information provided is accurate and complete</strong> to the best of my knowledge. I authorize CardConnect Services / Fiserv to verify this information and obtain consumer reports for the purpose of establishing a merchant account.
-</span>
-</label>
-<div class="err-text" id="err-consent_verify">You must certify the information is accurate.</div>
-</div>
-
-<div class="form-group" style="margin-top:10px">
-<label class="consent-row" for="consent_ach">
-<input type="checkbox" id="consent_ach" name="consent_ach" required>
-<span class="consent-text">
-I authorize CardConnect, LLC to initiate <strong>ACH electronic debits and credits</strong> to the bank account(s) listed above for deposit of card processing funds and collection of fees, until revoked in writing.
-</span>
-</label>
-<div class="err-text" id="err-consent_ach">You must authorize ACH transactions.</div>
-</div>
-
-<div class="submit-area">
-<button type="submit" class="btn-submit" id="submit-btn">
-<span id="btn-text">→ &nbsp; Submit Application</span>
-</button>
-<div class="submit-note">
-🔐 &nbsp;All data is transmitted via 256-bit TLS encryption. &nbsp;·&nbsp;
-Your SSN and banking numbers are never stored in plaintext.
-</div>
-</div>
-
-</div><!-- /section-card consent -->
-
-<!-- SUCCESS -->
-<div class="section-card" id="success-card" style="display:none">
-<div class="success-overlay show">
-<span class="success-icon">🎉</span>
-<div class="success-title">Application <em>Submitted</em></div>
-<p class="success-sub">
-Your ownership and banking information has been securely delivered to your CardConnect representative.
-</p>
-<div class="success-ref" id="ref-number">REF — Loading...</div>
-<div class="next-steps">
-<h3>What happens next</h3>
-<div class="ns-item">
-<div class="ns-num">1</div>
-Your representative will review and enter your information into the CardConnect / Clover merchant platform within 1 business day.
-</div>
-<div class="ns-item">
-<div class="ns-num">2</div>
-You will receive an email with a link to review and electronically sign the merchant agreement.
-</div>
-<div class="ns-item">
-<div class="ns-num">3</div>
-Once signed and approved, your merchant account will be activated and your first lower-rate statement will arrive within 30 days.
+<p style="font-size:11px;color:var(--gold);font-style:italic;margin-top:9px">For $31 more per month: professional infrastructure, chip/tap/Apple Pay on every channel, next-day settlement every day.</p>
 </div>
 </div>
 </div>
 </div>
 
-</form>
+<!-- 05 CALCULATOR -->
+<div class="slide" id="s4">
+<div class="row">
+<div class="col col-40" style="justify-content:center;gap:11px">
+<div class="tag">Live Calculator</div>
+<div class="h2">Enter your volume.<br><em>See your number.</em></div>
+<div class="gold-rule"></div>
+<p class="body">Drag the slider to your approximate monthly processing volume. All four results update instantly.</p>
+<div class="card-gl"><p class="body-sm">These are rate savings only — the difference between what Cash App charges today and what our IC+1.35% costs. The optional $100/mo device rental is not included here.</p></div>
+</div>
+<div class="col" style="justify-content:center">
+<div class="calc">
+<div class="tag">Monthly Processing Volume</div>
+<input type="range" class="cslider" id="vslide" min="5000" max="200000" step="5000" value="50000">
+<div class="cval" id="vdisp">$50,000 / month</div>
+<p style="font-size:10.5px;color:var(--mist);text-align:center;margin-bottom:8px">Avg $30 ticket · ~1,667 transactions/month</p>
+<div class="cresults">
+<div class="cbox"><div class="crv" id="r-ca">$1,467/mo</div><div class="crl">Cash App today (2.6%+$0.10)</div></div>
+<div class="cbox"><div class="crv" id="r-us">$1,338/mo</div><div class="crl">Our rate (IC+1.35%+$0.05)</div></div>
+<div class="cbox hi"><div class="crv" id="r-mo">$129/mo</div><div class="crl">Monthly rate savings</div></div>
+<div class="cbox hi"><div class="crv" id="r-yr">$1,548/yr</div><div class="crl">Annual rate savings</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-<!-- FOOTER -->
-<footer>
-<p>
-<strong style="color:var(--mist2)">CardConnect Services</strong> · A CVEST / Fiserv Joint Venture Acquisition Brand<br>
-Paragon Global Trade LLC · Governed by Pennsylvania Law<br>
-Questions? <a href="mailto:lamont@paragonglobaltrade.com">lamont@paragonglobaltrade.com</a> · (323) 630-3423<br><br>
-All submitted information is encrypted and handled in accordance with PCI-DSS security standards.
-</p>
-</footer>
+<!-- 06 DRIVER HARDWARE -->
+<div class="slide" id="s5">
+<div class="row">
+<div class="col col-45" style="justify-content:center;gap:11px">
+<div class="tag">Driver Hardware</div>
+<div class="h2">Drivers pay <em>nothing monthly.</em></div>
+<div class="gold-rule"></div>
+<p class="body">Drivers use their existing smartphones. Two options — both deposit to your one account. No monthly device rental required for your delivery team.</p>
+<div class="card-gold"><div class="tag">Cost Per Driver Per Month</div><div style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,40px);color:var(--gold);margin-bottom:4px">$0</div><p class="body-sm">One-time $49 reader purchase — or free with Tap to Pay on iPhone XS or newer. No rental. No subscription. No monthly fee.</p></div>
+</div>
+<div class="col" style="justify-content:center;gap:13px">
+<div class="dcard">
+<div class="dic">💳</div>
+<div><span class="dbadge">$49 One-Time · No Rental</span><h3>Clover Go Reader</h3><p>Pocket-sized reader plugs into any iPhone or Android. Accepts tap, chip, and swipe. Driver buys it once — works anywhere with cell signal. No monthly fee ever.</p><div class="dprice">$49 one-time purchase per driver</div></div>
+</div>
+<div class="dcard">
+<div class="dic">📱</div>
+<div><span class="dbadge">Free — No Hardware Needed</span><h3>Tap to Pay on iPhone</h3><p>Any iPhone XS or newer running the free Clover app accepts contactless payments natively. No reader required. Customer taps card or phone directly on the driver's screen.</p><div class="dprice">$0 cost · iPhone XS or newer required</div></div>
+</div>
+</div>
+</div>
+</div>
 
-</div><!-- /page -->
+<!-- 07 EVENT HARDWARE -->
+<div class="slide" id="s6">
+<div class="row">
+<div class="col col-45" style="justify-content:center;gap:11px">
+<div class="tag">Optional Rental Hardware</div>
+<div class="h2">For events <em>&amp; your hub.</em></div>
+<div class="gold-rule"></div>
+<p class="body">Two optional monthly rentals for your festival operation and base of operations. No purchase required. Cancel anytime. Hardware replaced at no cost if it fails.</p>
+<div class="card-gold"><div class="tag">Total Optional Rental</div><div style="font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);color:var(--gold);margin-bottom:5px">$100 / month</div>
+<div style="display:flex;justify-content:space-between;margin-top:4px">
+<div><div class="body-sm">Clover Kiosk</div><div style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold)">$65/mo</div></div>
+<div><div class="body-sm">Clover Mini</div><div style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold)">$35/mo</div></div>
+<div><div class="body-sm">Delivery drivers</div><div style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--gold)">$0/mo</div></div>
+</div></div>
+</div>
+<div class="col" style="justify-content:center;gap:13px">
+<div class="dcard">
+<div class="dic">🏪</div>
+<div><span class="dbadge">$65/mo · Rental</span><h3>Clover Kiosk</h3><p>24-inch self-order touchscreen + 8-inch payment display + built-in receipt printer. Customers browse, order, and pay themselves. Average ticket increases 30%. No cashier required at your booth.</p><div class="dprice">Rental: $65/month · No purchase required</div></div>
+</div>
+<div class="dcard">
+<div class="dic">🖥️</div>
+<div><span class="dbadge">$35/mo · Rental</span><h3>Clover Mini</h3><p>Compact 7-inch countertop hub at your base of operations. View all driver and kiosk sales in real time, run daily reports, take phone orders, and manage your full operation from one screen.</p><div class="dprice">Rental: $35/month · No purchase required</div></div>
+</div>
+</div>
+</div>
+</div>
 
+<!-- 08 SOFTWARE -->
+<div class="slide" id="s7">
+<div class="row">
+<div class="col col-50" style="justify-content:center;gap:11px">
+<div class="tag">Software Plan</div>
+<div class="h2">Counter Service Plan.<br><em>$59.95 / month.</em></div>
+<div class="gold-rule"></div>
+<p class="body">Covers all devices and channels under one subscription. One real-time dashboard for every driver and every event.</p>
+<div class="fi"><div class="fi-icon">🛵</div><div><h4>Delivery Order Management</h4><p>Multiple order types, delivery zones, and driver assignment all in one dashboard.</p></div></div>
+<div class="fi"><div class="fi-icon">🌐</div><div><h4>Online Ordering Built In</h4><p>Clover generates a branded online order page. Customers order and pay — no third-party commission.</p></div></div>
+<div class="fi"><div class="fi-icon">📊</div><div><h4>Real-Time Sales Dashboard</h4><p>Every driver and every event channel visible in one screen. Daily reconciliation in seconds.</p></div></div>
+</div>
+<div class="col" style="justify-content:center;gap:10px">
+<div class="tag">How Cash App &amp; PayPal Consolidate</div>
+<div class="fi"><div class="fi-icon">📲</div><div><h4>Cash App → Clover QR</h4><p>New Clover QR replaces your Cash App QR. Identical customer experience. 2-day hold and 2.6% rate eliminated.</p></div></div>
+<div class="fi"><div class="fi-icon">💳</div><div><h4>PayPal → Clover Checkout</h4><p>Rate drops from 2.99% to IC+1.35%. Next-day settlement replaces PayPal's rolling fund hold.</p></div></div>
+<div class="fi"><div class="fi-icon">📱</div><div><h4>Apple Pay &amp; Google Pay</h4><p>Built into every Clover device natively. All contactless payments deposit to the same account.</p></div></div>
+<div class="fi"><div class="fi-icon">⬛</div><div><h4>Universal Event QR Code</h4><p>One Clover QR at your booth. Cash App, PayPal, Apple Pay — any wallet scans the same code. All revenue to one account.</p></div></div>
+</div>
+</div>
+</div>
+
+<!-- 09 ACTIVATION -->
+<div class="slide" id="s8">
+<div class="row">
+<div class="col col-45" style="justify-content:center;gap:11px">
+<div class="tag">Activation Timeline</div>
+<div class="h2">Live in <em>7 days.</em></div>
+<div class="gold-rule"></div>
+<p class="body">From first conversation to first unified deposit: seven days. No downtime. No disruption to your customers.</p>
+<div class="card-gold"><div class="tag">What You Get on Day 7</div><p class="body-sm">Every channel active. Every driver processing. Kiosk live at your next event. First lower-rate statement within 30 days. One bank deposit every morning going forward.</p></div>
+</div>
+<div class="col" style="justify-content:center">
+<div class="tl">
+<div class="ti"><div class="tdot">01</div><div class="tbody"><div class="tday">Day 1–2</div><h4>Apply &amp; Approve</h4><p>Application submitted. Approval typically within 24 hours for standard business profiles.</p></div></div>
+<div class="ti"><div class="tdot">02</div><div class="tbody"><div class="tday">Day 3–5</div><h4>Hardware Ships</h4><p>Kiosk and Mini ship pre-configured to your account. Clover Go readers ship to drivers.</p></div></div>
+<div class="ti"><div class="tdot">03</div><div class="tbody"><div class="tday">Day 5–7</div><h4>Setup &amp; Test</h4><p>Load your menu, connect drivers' phones, generate Clover QR codes, and run test transactions across all channels.</p></div></div>
+<div class="ti"><div class="tdot">✓</div><div class="tbody"><div class="tday">Day 7</div><h4>First Unified Sale</h4><p>All channels deposit into one business bank account. First lower-rate statement within 30–45 days.</p></div></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 10 WHY US -->
+<div class="slide" id="s9">
+<div class="row">
+<div class="col" style="justify-content:center;gap:10px">
+<div class="tag">Why This Wins</div>
+<div class="h2" style="margin-bottom:4px">Built for <em>operators on the move.</em></div>
+<div class="gold-rule"></div>
+<div class="wcard"><div class="wnum">1</div><div><h4>Drivers Pay Nothing Monthly</h4><p>No Flex rental. Drivers use their phones with a $49 one-time reader or Tap to Pay on iPhone at zero hardware cost.</p></div></div>
+<div class="wcard"><div class="wnum">2</div><div><h4>You Cannot Accept Cards Today</h4><p>Cash App and PayPal QR codes only work if customers have those apps. Chip, tap, and physical cards are all blocked. Clover fixes this immediately.</p></div></div>
+<div class="wcard"><div class="wnum">3</div><div><h4>One Account. One Deposit. Every Night.</h4><p>Every driver and every event deposits to one business bank account the next morning. No manual transfers at week end.</p></div></div>
+</div>
+<div class="col" style="justify-content:center;gap:10px;padding-top:54px">
+<div class="wcard"><div class="wnum">4</div><div><h4>Kiosk Replaces a Cashier at Events</h4><p>Customers self-order and pay. No staff required. Lines move faster. Average ticket is 30% higher than counter service.</p></div></div>
+<div class="wcard"><div class="wnum">5</div><div><h4>Lower Rate on Every Transaction</h4><p>IC+1.35% beats Cash App 2.6%+$0.10 and PayPal 2.99% on every sale. At $50K/month that is $129 more in your pocket every month.</p></div></div>
+<div class="wcard"><div class="wnum">6</div><div><h4>Fiserv / First Data Infrastructure</h4><p>Enterprise-grade rails used by the largest banks in North America. PCI-DSS Level 1. Not a startup — Fiserv processes $2T+ annually.</p></div></div>
+</div>
+</div>
+</div>
+
+<!-- 11 COMPLETE PACKAGE -->
+<div class="slide" id="s10">
+<div class="row">
+<div class="col col-50" style="justify-content:center;gap:11px">
+<div class="tag">Complete Package</div>
+<div class="h2">Everything you need.<br><em>One monthly number.</em></div>
+<div class="gold-rule"></div>
+<div class="pgrid">
+<div class="pi"><div class="pil">Delivery Drivers ×5</div><div class="piv">$0 / month</div><div class="pis">Clover app + $49 reader once</div></div>
+<div class="pi"><div class="pil">Kiosk Rental</div><div class="piv">$65 / month</div><div class="pis">Festival &amp; events</div></div>
+<div class="pi"><div class="pil">Mini Rental</div><div class="piv">$35 / month</div><div class="pis">Hub &amp; base station</div></div>
+<div class="pi"><div class="pil">Software Plan</div><div class="piv">$59.95 / mo</div><div class="pis">Counter Service plan</div></div>
+<div class="pi"><div class="pil">Processing Rate</div><div class="piv">IC + 1.35%</div><div class="pis">+$0.05 per transaction</div></div>
+<div class="pi"><div class="pil">Settlement</div><div class="piv">Next Day</div><div class="pis">Weekends included</div></div>
+</div>
+</div>
+<div class="col" style="justify-content:center;gap:11px">
+<div class="card-gold"><div class="tag">Total Monthly — Hardware &amp; Software Only</div><div style="font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,48px);color:var(--gold);margin-bottom:5px">~$160 / month</div><p class="body-sm">Kiosk + Mini rental + software. Processing costs vary by volume. Driver hardware is a one-time $49 purchase only.</p></div>
+<div class="card"><div class="tag">No Lock-In</div><p class="body">Month-to-month on hardware rentals. No multi-year processing contract required. Add a device as you grow. Cancel a rental if you need to. You are in control.</p></div>
+<div class="card"><div class="tag">Fiserv / First Data</div><p class="body">The same rails used by the largest retailers in North America. PCI-DSS Level 1 certified. Enterprise-grade reliability priced for your business.</p></div>
+</div>
+</div>
+</div>
+
+<!-- 12 FREE AUDIT -->
+<div class="slide" id="s11">
+<div class="row">
+<div class="col col-50" style="justify-content:center;gap:11px">
+<div class="tag">Free Analysis</div>
+<div class="h2">See your exact savings <em>in 72 hours.</em></div>
+<div class="gold-rule"></div>
+<p class="body">Send us 3 months of Cash App and PayPal transaction history. Within 72 hours we deliver a one-page analysis showing your exact annual savings and the full recommended setup for your operation.</p>
+<div class="card-gl"><div style="font-size:12.5px;font-weight:600;color:var(--white);margin-bottom:5px">What We Analyze</div><p class="body-sm">✓ Your current blended rate across all channels<br>✓ Card mix — debit vs credit breakdown<br>✓ Transaction count and average ticket<br>✓ Peak volume days (festivals, events)<br>✓ Your exact savings under IC+1.35%</p></div>
+</div>
+<div class="col" style="justify-content:center;gap:11px">
+<div class="tag">Three Steps</div>
+<div class="tl">
+<div class="ti"><div class="tdot">1</div><div class="tbody"><div class="tday">Step One</div><h4>Send 3 Months of History</h4><p>Export 3 months of Cash App and PayPal records. Any format — screenshot, CSV, or PDF. Takes 5 minutes.</p></div></div>
+<div class="ti"><div class="tdot">2</div><div class="tbody"><div class="tday">Step Two</div><h4>72-Hour Analysis</h4><p>We model your exact savings, recommend the right hardware, and deliver a one-page proposal with specific numbers.</p></div></div>
+<div class="ti"><div class="tdot">3</div><div class="tbody"><div class="tday">Step Three</div><h4>Decide with Full Information</h4><p>No sales pressure. No obligation. If the numbers don't make sense, we will tell you clearly.</p></div></div>
+</div>
+<div class="card-gold" style="text-align:center"><p class="body-sm">Zero cost. Zero obligation. Zero pressure.<br>If your current setup is already optimal, we will tell you.</p></div>
+</div>
+</div>
+</div>
+
+<!-- 13 CTA -->
+<div class="slide" id="s12">
+<div class="cta-wrap">
+<div class="tag">Enterprise Payments Advisory · Mobile &amp; Events · Confidential 2026</div>
+<div class="cta-h">Ready to consolidate<br><em>everything?</em></div>
+<div class="grw"></div>
+<p style="font-size:12.5px;color:var(--mist2);max-width:460px;line-height:1.6;text-align:center">Send 3 months of statements. Full savings analysis in 72 hours. Zero cost. Zero obligation. If your current setup is already optimal, we will tell you that.</p>
+<div class="cta-steps">
+<div class="cstep"><div class="csn">1</div><div class="csl">Send Statements</div><div class="css_">3 months of Cash App &amp; PayPal history</div></div>
+<div class="cstep"><div class="csn">2</div><div class="csl">72-Hour Analysis</div><div class="css_">Exact savings delivered line by line</div></div>
+<div class="cstep"><div class="csn">3</div><div class="csl">Decide</div><div class="css_">Full information. No pressure. Ever.</div></div>
+</div>
+<div class="ccontact">
+<div class="ccn">Lamont Perkins</div>
+<div class="cct">Enterprise Payments Advisory · CardConnect Services · Fiserv / First Data</div>
+<div class="grw"></div>
+<div class="cce">lamont@paragonglobaltrade.com</div>
+<div class="ccp">(323) 630-3423</div>
+</div>
+<p style="font-size:9.5px;color:var(--mist)">Fiserv / First Data Infrastructure · PCI-DSS Level 1 · CardConnect Services · Confidential 2026</p>
+</div>
+</div>
+
+</div><!-- /sarea -->
+<div class="bnav">
+<button class="btn" id="bprev" disabled>← Back</button>
+<span class="bnav-title" id="btitle">Overview</span>
+<button class="btn pri" id="bnext">Next →</button>
+</div>
 <script>
-// ── PROGRESS BAR ──────────────────────────────────────────────────────────────
-function updateProgress() {
-const fields = document.querySelectorAll('input[required], select[required]');
-let filled = 0;
-fields.forEach(f => { if (f.value && f.value.trim()) filled++; });
-const pct = Math.round((filled / fields.length) * 100);
-document.getElementById('top-progress').style.width = pct + '%';
+const TITLES=['Overview','The Problem','The Solution','Savings Table','Live Calculator','Driver Hardware','Event Hardware','Software Plan','Activation','Why This Wins','Full Package','Free Analysis','Get Started'];
+const N=13;let cur=0;
+const dotsEl=document.getElementById('dots');
+for(let i=0;i<N;i++){const d=document.createElement('button');d.className='dot'+(i===0?' on':'');d.onclick=()=>go(i);dotsEl.appendChild(d);}
+function go(n){
+if(n<0||n>=N)return;
+const prev=document.getElementById('s'+cur);
+prev.classList.remove('on');prev.classList.add('out');
+setTimeout(()=>prev.classList.remove('out'),420);
+cur=n;
+document.getElementById('s'+cur).classList.add('on');
+document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+document.getElementById('ctr').textContent=(cur+1)+' / '+N;
+document.getElementById('btitle').textContent=TITLES[cur];
+document.getElementById('prog').style.width=(((cur+1)/N)*100)+'%';
+document.getElementById('bprev').disabled=cur===0;
+document.getElementById('bnext').textContent=cur===N-1?'Start Over →':'Next →';
 }
-document.addEventListener('input', updateProgress);
-document.addEventListener('change', updateProgress);
-
-// ── SSN FORMATTING & TOGGLE ───────────────────────────────────────────────────
-const ssnInput = document.getElementById('ssn');
-const ssnToggle = document.getElementById('ssn-toggle');
-let ssnVisible = false;
-
-ssnInput.addEventListener('input', function () {
-let raw = this.value.replace(/\D/g, '').slice(0, 9);
-let formatted = raw;
-if (raw.length > 5) formatted = raw.slice(0,3) + '-' + raw.slice(3,5) + '-' + raw.slice(5);
-else if (raw.length > 3) formatted = raw.slice(0,3) + '-' + raw.slice(3);
-this.value = formatted;
-});
-
-ssnToggle.addEventListener('click', function () {
-ssnVisible = !ssnVisible;
-ssnInput.type = ssnVisible ? 'text' : 'password';
-this.textContent = ssnVisible ? '🙈' : '👁';
-});
-
-// ── PHONE FORMATTING ──────────────────────────────────────────────────────────
-function formatPhone(el) {
-let v = el.value.replace(/\D/g, '').slice(0, 10);
-if (v.length >= 6) v = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
-else if (v.length >= 3) v = '(' + v.slice(0,3) + ') ' + v.slice(3);
-el.value = v;
+function nxt(){if(cur===N-1)go(0);else go(cur+1);}
+function prv(){go(cur-1);}
+document.getElementById('bnext').onclick=nxt;
+document.getElementById('bprev').onclick=prv;
+let tx=0;
+document.getElementById('sarea').addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+document.getElementById('sarea').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){dx<0?nxt():prv();}});
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')nxt();if(e.key==='ArrowLeft'||e.key==='ArrowUp')prv();});
+const sl=document.getElementById('vslide');
+function calc(){
+const v=+sl.value,txns=v/30;
+const ca=v*.026+txns*.10,us=v*(0.0178+0.0135)+txns*.05;
+const sm=ca-us,sy=sm*12;
+document.getElementById('vdisp').textContent='$'+v.toLocaleString()+' / month';
+document.getElementById('r-ca').textContent='$'+Math.round(ca).toLocaleString()+'/mo';
+document.getElementById('r-us').textContent='$'+Math.round(us).toLocaleString()+'/mo';
+document.getElementById('r-mo').textContent='$'+Math.round(sm).toLocaleString()+'/mo';
+document.getElementById('r-yr').textContent='$'+Math.round(sy).toLocaleString()+'/yr';
 }
-document.getElementById('phone').addEventListener('input', function(){ formatPhone(this); });
-document.getElementById('mobile').addEventListener('input', function(){ formatPhone(this); });
-
-// ── ROUTING NUMBER FORMATTING ─────────────────────────────────────────────────
-document.getElementById('routing_1').addEventListener('input', function () {
-this.value = this.value.replace(/\D/g, '').slice(0, 9);
-});
-document.getElementById('account_1').addEventListener('input', function () {
-this.value = this.value.replace(/\D/g, '').slice(0, 20);
-});
-document.getElementById('account_1_confirm').addEventListener('input', function () {
-this.value = this.value.replace(/\D/g, '').slice(0, 20);
-});
-
-// ── BANK FIELD VISIBILITY TOGGLE ─────────────────────────────────────────────
-function toggleBankVis(fieldId, btn) {
-const field = document.getElementById(fieldId);
-const isPass = field.type === 'password';
-field.type = isPass ? 'text' : 'password';
-btn.textContent = isPass ? '🙈' : '👁';
-}
-
-// ── VOIDED CHECK UPLOAD ───────────────────────────────────────────────────────
-function handleVoidCheck(input, bankIdx) {
-const file = input.files[0];
-if (!file) return;
-if (file.size > 10 * 1024 * 1024) {
-alert('File exceeds 10MB limit. Please use a smaller file.');
-input.value = '';
-return;
-}
-const nameEl = document.getElementById(`void-name-${bankIdx}`);
-const sizeEl = document.getElementById(`void-size-${bankIdx}`);
-const attachedEl = document.getElementById(`void-attached-${bankIdx}`);
-const uploadEl = document.getElementById(`void-upload-${bankIdx}`);
-nameEl.textContent = file.name;
-sizeEl.textContent = formatBytes(file.size);
-attachedEl.classList.add('show');
-uploadEl.style.display = 'none';
-}
-
-function removeVoidCheck(bankIdx) {
-document.getElementById(`voided_check_${bankIdx}`).value = '';
-document.getElementById(`void-attached-${bankIdx}`).classList.remove('show');
-document.getElementById(`void-upload-${bankIdx}`).style.display = '';
-}
-
-function formatBytes(bytes) {
-if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-return (bytes / 1048576).toFixed(1) + ' MB';
-}
-
-// ── ADD ADDITIONAL BANK ───────────────────────────────────────────────────────
-let bankCount = 1;
-function addBank() {
-if (bankCount >= 3) {
-document.getElementById('add-bank-btn').style.display = 'none';
-return;
-}
-bankCount++;
-const idx = bankCount;
-const container = document.getElementById('banks-container');
-const html = `
-<div class="bank-block" id="bank-${idx}" style="animation:fadeUp .4s ease">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-<div class="bank-label" style="margin-bottom:0">Bank Account ${idx}</div>
-<button type="button" onclick="removeBank(${idx})"
-style="background:transparent;border:none;color:var(--mist);cursor:pointer;font-size:13px;
-padding:4px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.1);
-transition:all .2s;font-family:'DM Mono',monospace;letter-spacing:1px"
-onmouseover="this.style.color='#E08070';this.style.borderColor='rgba(192,74,43,.4)'"
-onmouseout="this.style.color='';this.style.borderColor=''">
-Remove
-</button>
-</div>
-<div class="form-group">
-<label for="routing_${idx}">Routing Number</label>
-<div class="bank-number-wrap">
-<input type="password" id="routing_${idx}" name="routing_${idx}"
-placeholder="9-digit routing number" maxlength="9" inputmode="numeric">
-<button type="button" class="bank-eye" onclick="toggleBankVis('routing_${idx}', this)">👁</button>
-</div>
-</div>
-<div class="form-group">
-<label for="account_${idx}">Account Number</label>
-<div class="bank-number-wrap">
-<input type="password" id="account_${idx}" name="account_${idx}"
-placeholder="Account number" maxlength="20" inputmode="numeric">
-<button type="button" class="bank-eye" onclick="toggleBankVis('account_${idx}', this)">👁</button>
-</div>
-</div>
-<div class="form-group">
-<label>Account Type</label>
-<div class="account-type-row">
-<label class="acct-option"><input type="radio" name="account_type_${idx}" value="Checking"><span class="acct-option-label">🏦 Checking</span></label>
-<label class="acct-option"><input type="radio" name="account_type_${idx}" value="Savings"><span class="acct-option-label">💰 Savings</span></label>
-<label class="acct-option"><input type="radio" name="account_type_${idx}" value="Business Checking"><span class="acct-option-label">🏢 Business Checking</span></label>
-</div>
-</div>
-<div class="form-group">
-<label>Account Usage</label>
-<input type="text" value="Deposit and Withdrawal" disabled style="opacity:.65;cursor:not-allowed">
-</div>
-<div class="form-group">
-<label>Voided Check or Bank Letter</label>
-<div class="void-upload" id="void-upload-${idx}">
-<input type="file" id="voided_check_${idx}" name="voided_check_${idx}"
-accept=".pdf,.jpg,.jpeg,.png,.heic,.heif"
-onchange="handleVoidCheck(this, ${idx})">
-<div class="vu-icon">🧾</div>
-<div class="vu-text">Upload Voided Check or Bank Letter</div>
-<div class="vu-sub">PDF, JPG, PNG · Max 10MB</div>
-<div class="vu-badge">Browse / Drop File</div>
-</div>
-<div class="file-attached" id="void-attached-${idx}">
-<span class="fa-icon">📄</span>
-<div>
-<div class="fa-name" id="void-name-${idx}">—</div>
-<div class="fa-size" id="void-size-${idx}">—</div>
-</div>
-<button type="button" class="fa-remove" onclick="removeVoidCheck(${idx})">✕</button>
-</div>
-</div>
-</div>`;
-container.insertAdjacentHTML('beforeend', html);
-if (bankCount >= 3) document.getElementById('add-bank-btn').style.display = 'none';
-// Add numeric input formatting for new bank
-const r = document.getElementById(`routing_${idx}`);
-const a = document.getElementById(`account_${idx}`);
-if (r) r.addEventListener('input', function(){ this.value = this.value.replace(/\D/g,'').slice(0,9); });
-if (a) a.addEventListener('input', function(){ this.value = this.value.replace(/\D/g,'').slice(0,20); });
-}
-
-function removeBank(idx) {
-const el = document.getElementById(`bank-${idx}`);
-if (el) el.remove();
-bankCount--;
-document.getElementById('add-bank-btn').style.display = '';
-}
-
-// ── FUNDING INFO TOOLTIP ──────────────────────────────────────────────────────
-function toggleFundingInfo() {
-const tt = document.getElementById('funding-tooltip');
-tt.classList.toggle('show');
-}
-
-// ── VALIDATION ────────────────────────────────────────────────────────────────
-function showErr(fieldId, show) {
-const el = document.getElementById(`err-${fieldId}`);
-const input = document.getElementById(fieldId);
-if (el) el.style.display = show ? 'block' : 'none';
-if (input) input.classList.toggle('error', show);
-}
-
-function validateAll() {
-let valid = true;
-
-// Owner name
-const ownerName = document.getElementById('owner_name').value.trim();
-if (!ownerName) { showErr('owner_name', true); valid = false; } else showErr('owner_name', false);
-
-// Title
-if (!document.getElementById('title').value) { showErr('title', true); valid = false; } else showErr('title', false);
-
-// Ownership %
-const pct = parseFloat(document.getElementById('ownership_pct').value);
-if (!pct || pct < 1 || pct > 100) { showErr('ownership_pct', true); valid = false; } else showErr('ownership_pct', false);
-
-// SSN
-const ssn = document.getElementById('ssn').value.replace(/\D/g,'');
-if (ssn.length !== 9) { showErr('ssn', true); valid = false; } else showErr('ssn', false);
-
-// DOB
-if (!document.getElementById('dob').value) { showErr('dob', true); valid = false; } else showErr('dob', false);
-
-// Phone
-const phone = document.getElementById('phone').value.replace(/\D/g,'');
-if (phone.length < 10) { showErr('phone', true); valid = false; } else showErr('phone', false);
-
-// Email
-const email = document.getElementById('email').value;
-if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('email', true); valid = false; } else showErr('email', false);
-
-// DL Number
-if (!document.getElementById('dl_number').value.trim()) { showErr('dl_number', true); valid = false; } else showErr('dl_number', false);
-
-// DL State
-if (!document.getElementById('dl_state').value) { showErr('dl_state', true); valid = false; } else showErr('dl_state', false);
-
-// Address
-if (!document.getElementById('address1').value.trim()) { showErr('address1', true); valid = false; } else showErr('address1', false);
-if (!document.getElementById('city').value.trim()) { showErr('city', true); valid = false; } else showErr('city', false);
-if (!document.getElementById('state').value) { showErr('state', true); valid = false; } else showErr('state', false);
-if (!document.getElementById('zip').value.trim()) { showErr('zip', true); valid = false; } else showErr('zip', false);
-
-// Bank 1 routing
-const routing = document.getElementById('routing_1').value.replace(/\D/g,'');
-if (routing.length !== 9) { showErr('routing_1', true); valid = false; } else showErr('routing_1', false);
-
-// Bank 1 account
-const acct = document.getElementById('account_1').value.trim();
-if (!acct || acct.length < 4) { showErr('account_1', true); valid = false; } else showErr('account_1', false);
-
-// Account confirm match
-const acctConfirm = document.getElementById('account_1_confirm').value.trim();
-if (acctConfirm !== acct) { showErr('account_1_confirm', true); valid = false; } else showErr('account_1_confirm', false);
-
-// Account type
-const acctType = document.querySelector('input[name="account_type_1"]:checked');
-if (!acctType) { showErr('account_type_1', true); valid = false; } else showErr('account_type_1', false);
-
-// Voided check
-const voidFile = document.getElementById('voided_check_1').files[0];
-if (!voidFile) { showErr('voided_check_1', true); valid = false; } else showErr('voided_check_1', false);
-
-// Consents
-if (!document.getElementById('consent_verify').checked) { showErr('consent_verify', true); valid = false; } else showErr('consent_verify', false);
-if (!document.getElementById('consent_ach').checked) { showErr('consent_ach', true); valid = false; } else showErr('consent_ach', false);
-
-return valid;
-}
-
-// ── FORM SUBMISSION ───────────────────────────────────────────────────────────
-document.getElementById('main-form').addEventListener('submit', async function (e) {
-e.preventDefault();
-
-if (!validateAll()) {
-const firstErr = document.querySelector('.err-text[style*="block"]');
-if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
-return;
-}
-
-const btn = document.getElementById('submit-btn');
-const btnText = document.getElementById('btn-text');
-btn.disabled = true;
-btnText.innerHTML = '<span class="spinner"></span> Submitting...';
-
-const formData = new FormData(this);
-
-// Attach voided check files
-for (let i = 1; i <= bankCount; i++) {
-const fileInput = document.getElementById(`voided_check_${i}`);
-if (fileInput && fileInput.files[0]) {
-formData.append(`voided_check_bank_${i}`, fileInput.files[0]);
-}
-formData.delete(`voided_check_${i}`);
-}
-
-try {
-const res = await fetch('https://api.web3forms.com/submit', {
-method: 'POST',
-body: formData
-});
-const result = await res.json();
-
-if (result.success) {
-// Hide form cards, show success
-document.querySelectorAll('.section-card:not(#success-card)').forEach(c => c.style.display = 'none');
-const successCard = document.getElementById('success-card');
-successCard.style.display = 'block';
-// Generate a reference number
-const ref = 'CC-' + Date.now().toString(36).toUpperCase();
-document.getElementById('ref-number').textContent = 'REF — ' + ref;
-document.getElementById('top-progress').style.width = '100%';
-window.scrollTo({ top: 0, behavior: 'smooth' });
-} else {
-throw new Error(result.message || 'Submission failed');
-}
-} catch (err) {
-btn.disabled = false;
-btnText.innerHTML = '→ &nbsp; Submit Application';
-alert('Submission error. Please email your information directly to lamont@paragonglobaltrade.com or call (323) 630-3423.');
-console.error(err);
-}
-});
-
-// Add spinner CSS dynamically
-const style = document.createElement('style');
-style.textContent = `.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(12,14,17,.3);border-top-color:var(--ink);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}@keyframes spin{to{transform:rotate(360deg)}}`;
-document.head.appendChild(style);
-
-// Initial progress calculation
-updateProgress();
+sl.addEventListener('input',calc);calc();
+go(0);
 </script>
-
 </body>
 </html>
