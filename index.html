@@ -848,7 +848,7 @@ style="opacity:.65;cursor:not-allowed">
 <div class="form-group">
 <label>Voided Check or Bank Letter <span class="req">*</span></label>
 <div class="void-upload" id="void-upload-1">
-<input type="file" id="voided_check_1" name="voided_check_1"
+<input type="file" id="attachment" name="attachment"
 accept=".pdf,.jpg,.jpeg,.png,.heic,.heif"
 onchange="handleVoidCheck(this, 1)">
 <div class="vu-icon">🧾</div>
@@ -1053,8 +1053,8 @@ btn.textContent = isPass ? '🙈' : '👁';
 function handleVoidCheck(input, bankIdx) {
 const file = input.files[0];
 if (!file) return;
-if (file.size > 10 * 1024 * 1024) {
-alert('File exceeds 10MB limit. Please use a smaller file.');
+if (file.size > 4 * 1024 * 1024) {
+alert('File exceeds 4MB limit. Please use a smaller file.');
 input.value = '';
 return;
 }
@@ -1138,7 +1138,7 @@ accept=".pdf,.jpg,.jpeg,.png,.heic,.heif"
 onchange="handleVoidCheck(this, ${idx})">
 <div class="vu-icon">🧾</div>
 <div class="vu-text">Upload Voided Check or Bank Letter</div>
-<div class="vu-sub">PDF, JPG, PNG · Max 10MB</div>
+<div class="vu-sub">PDF, JPG, PNG · Max 4MB</div>
 <div class="vu-badge">Browse / Drop File</div>
 </div>
 <div class="file-attached" id="void-attached-${idx}">
@@ -1267,13 +1267,6 @@ btnText.innerHTML = '<span class="spinner"></span> Submitting...';
 const formData = new FormData(this);
 
 // Attach voided check files
-for (let i = 1; i <= bankCount; i++) {
-const fileInput = document.getElementById(`voided_check_${i}`);
-if (fileInput && fileInput.files[0]) {
-formData.append(`voided_check_bank_${i}`, fileInput.files[0]);
-}
-formData.delete(`voided_check_${i}`);
-}
 
 try {
 const res = await fetch('https://api.web3forms.com/submit', {
